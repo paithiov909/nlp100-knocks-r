@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Rで言語処理100本ノックを解くわけがない</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rで言語処理100本ノックを解くわけがない</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#本書について"><i class="fa fa-check"></i><b>1.1</b> 本書について</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#全体の見通し"><i class="fa fa-check"></i><b>1.2</b> 全体の見通し</a></li>
@@ -207,6 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.6" data-path="係り受け解析.html"><a href="係り受け解析.html#動詞の格パターンの抽出"><i class="fa fa-check"></i><b>4.2.6</b> 45. 動詞の格パターンの抽出</a></li>
 <li class="chapter" data-level="4.2.7" data-path="係り受け解析.html"><a href="係り受け解析.html#動詞の格フレーム情報の抽出"><i class="fa fa-check"></i><b>4.2.7</b> 46. 動詞の格フレーム情報の抽出</a></li>
 <li class="chapter" data-level="4.2.8" data-path="係り受け解析.html"><a href="係り受け解析.html#機能動詞構文のマイニング"><i class="fa fa-check"></i><b>4.2.8</b> 47. 機能動詞構文のマイニング</a></li>
+<li class="chapter" data-level="4.2.9" data-path="係り受け解析.html"><a href="係り受け解析.html#名詞から根へのパスの抽出"><i class="fa fa-check"></i><b>4.2.9</b> 48. 名詞から根へのパスの抽出</a></li>
+<li class="chapter" data-level="4.2.10" data-path="係り受け解析.html"><a href="係り受け解析.html#名詞間の係り受けパスの抽出"><i class="fa fa-check"></i><b>4.2.10</b> 49. 名詞間の係り受けパスの抽出</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="セッション情報.html"><a href="セッション情報.html"><i class="fa fa-check"></i><b>5</b> セッション情報</a></li>
@@ -234,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 3</span> 形態素解析</h1>
 <div id="データの読み込み" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> データの読み込み</h2>
-<p>気をきかせて{readtext}で読みこんでおきます。</p>
+<p>readtextで読みこんでおきます。</p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="形態素解析.html#cb65-1"></a>temp &lt;-<span class="st"> </span><span class="kw">tempfile</span>(<span class="dt">fileext =</span> <span class="st">&quot;.txt&quot;</span>)</span>
 <span id="cb65-2"><a href="形態素解析.html#cb65-2"></a><span class="kw">download.file</span>(<span class="st">&quot;https://nlp100.github.io/data/neko.txt&quot;</span>, temp)</span>
 <span id="cb65-3"><a href="形態素解析.html#cb65-3"></a>neko &lt;-<span class="st"> </span>readtext<span class="op">::</span><span class="kw">readtext</span>(temp, <span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
@@ -343,14 +345,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb75-19"><a href="形態素解析.html#cb75-19"></a>  <span class="kw">return</span>(res)</span>
 <span id="cb75-20"><a href="形態素解析.html#cb75-20"></a>}) <span class="op">%&gt;%</span></span>
 <span id="cb75-21"><a href="形態素解析.html#cb75-21"></a><span class="st">  </span><span class="kw">head</span>(30L)</span></code></pre></div>
-<pre><code>#&gt;  [1] &quot;日目&quot;             &quot;一面&quot;             &quot;アキリス&quot;         &quot;――これ&quot;        
-#&gt;  [5] &quot;沙弥先生&quot;         &quot;蝉取り&quot;           &quot;独仙君&quot;           &quot;時十五分前頃&quot;    
-#&gt;  [9] &quot;俯目&quot;             &quot;チョン髷&quot;         &quot;三年生&quot;           &quot;世間一般&quot;        
-#&gt; [13] &quot;灯心入り&quot;         &quot;旧式運動&quot;         &quot;こないだうち&quot;     &quot;みんなバクテリヤ&quot;
-#&gt; [17] &quot;不便邪魔&quot;         &quot;程度以上&quot;         &quot;保険会社&quot;         &quot;万年漬&quot;          
-#&gt; [21] &quot;紙屑籠&quot;           &quot;薄気味&quot;           &quot;亭君&quot;             &quot;銀行家&quot;          
-#&gt; [25] &quot;通り一&quot;           &quot;女子裁縫&quot;         &quot;十把一&quot;           &quot;ホホホ口&quot;        
-#&gt; [29] &quot;一匹&quot;             &quot;落雲館&quot;</code></pre>
+<pre><code>#&gt;  [1] &quot;普通の&quot;   &quot;時姉&quot;     &quot;油壺&quot;     &quot;主人自ら&quot; &quot;招魂社&quot;   &quot;安心さ&quot;   &quot;退屈そう&quot;
+#&gt;  [8] &quot;枚かけ&quot;   &quot;大変尊敬&quot; &quot;極楽主義&quot; &quot;三口半&quot;   &quot;寒月君&quot;   &quot;所謂通人&quot; &quot;一人&quot;    
+#&gt; [15] &quot;迷亭君&quot;   &quot;寒月君&quot;   &quot;石地蔵&quot;   &quot;先刻一&quot;   &quot;臥竜窟&quot;   &quot;台馳&quot;     &quot;種以外&quot;  
+#&gt; [22] &quot;先生方&quot;   &quot;ようす&quot;   &quot;年漬&quot;     &quot;自殺者&quot;   &quot;沙弥君&quot;   &quot;仙君&quot;     &quot;三冊&quot;    
+#&gt; [29] &quot;女さ&quot;     &quot;三女子&quot;</code></pre>
 </div>
 <div id="単語の出現頻度" class="section level3" number="3.2.6">
 <h3><span class="header-section-number">3.2.6</span> 35. 単語の出現頻度</h3>

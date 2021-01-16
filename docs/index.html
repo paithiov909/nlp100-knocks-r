@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Rで言語処理100本ノックを解くわけがない</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rで言語処理100本ノックを解くわけがない</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> はじめに</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#本書について"><i class="fa fa-check"></i><b>1.1</b> 本書について</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#全体の見通し"><i class="fa fa-check"></i><b>1.2</b> 全体の見通し</a></li>
@@ -207,6 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.6" data-path="係り受け解析.html"><a href="係り受け解析.html#動詞の格パターンの抽出"><i class="fa fa-check"></i><b>4.2.6</b> 45. 動詞の格パターンの抽出</a></li>
 <li class="chapter" data-level="4.2.7" data-path="係り受け解析.html"><a href="係り受け解析.html#動詞の格フレーム情報の抽出"><i class="fa fa-check"></i><b>4.2.7</b> 46. 動詞の格フレーム情報の抽出</a></li>
 <li class="chapter" data-level="4.2.8" data-path="係り受け解析.html"><a href="係り受け解析.html#機能動詞構文のマイニング"><i class="fa fa-check"></i><b>4.2.8</b> 47. 機能動詞構文のマイニング</a></li>
+<li class="chapter" data-level="4.2.9" data-path="係り受け解析.html"><a href="係り受け解析.html#名詞から根へのパスの抽出"><i class="fa fa-check"></i><b>4.2.9</b> 48. 名詞から根へのパスの抽出</a></li>
+<li class="chapter" data-level="4.2.10" data-path="係り受け解析.html"><a href="係り受け解析.html#名詞間の係り受けパスの抽出"><i class="fa fa-check"></i><b>4.2.10</b> 49. 名詞間の係り受けパスの抽出</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="セッション情報.html"><a href="セッション情報.html"><i class="fa fa-check"></i><b>5</b> セッション情報</a></li>
@@ -235,8 +237,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p class="author"><em>Kato Akiru</em></p>
 <p class="date"><em>2021-01-16</em></p>
 </div>
-<div id="rで言語処理100本ノックを解くわけがない" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Rで言語処理100本ノックを解くわけがない</h1>
+<div id="はじめに" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> はじめに</h1>
 <div id="本書について" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> 本書について</h2>
 <p>Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。</p>
@@ -343,9 +345,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt; )</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="index.html#cb19-1"></a><span class="kw">str</span>(csv)</span></code></pre></div>
 <pre><code>#&gt; tibble [50 x 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-#&gt;  $ rowid              : num [1:50] 434 316 125 682 674 749 57 536 150 678 ...
-#&gt;  $ sentences          : chr [1:50] &quot;(さあ帰って寝るかな。もっ切り二っつだな。そいでぁこいづと。)(戻るすか。)さっきの女の声がした。こっちではきせる&quot;| __truncated__ &quot;さあ、春だ、うたったり走ったり、とびあがったりするがいい。風野又三郎だって、もうガラスのマントをひらひらさせ大&quot;| __truncated__ &quot;今日実習が済んでから農舎の前に立ってグラジオラスの球根の旱してあるのを見ていたら武田先生も鶏小屋の消毒だか済ん&quot;| __truncated__ &quot;みんなはもっともと思って、そこを引きあげて、今度は笊森へ行きました。&quot; ...
-#&gt;  $ sentences_shift_jis: chr [1:50] &quot;(さあ帰って寝るかな。もっ切り二っつだな。そいでぁこいづと。)(戻るすか。)さっきの女の声がした。こっちではきせる&quot;| __truncated__ &quot;さあ、春だ、うたったり走ったり、とびあがったりするがいい。風野又三郎だって、もうガラスのマントをひらひらさせ大&quot;| __truncated__ &quot;今日実習が済んでから農舎の前に立ってグラジオラスの球根の旱してあるのを見ていたら武田先生も鶏小屋の消毒だか済ん&quot;| __truncated__ &quot;みんなはもっともと思って、そこを引きあげて、今度は笊森へ行きました。&quot; ...
+#&gt;  $ rowid              : num [1:50] 632 537 204 444 712 609 861 834 461 97 ...
+#&gt;  $ sentences          : chr [1:50] &quot;すると森の奥の方で何かパチパチ音がしました。&quot; &quot;「うん。その次に千つぶって云ったねい。千つぶでもよかったねい。」&quot; &quot;日が強く照るときは岩は乾いてまっ白に見え、たて横に走ったひび割れもあり、大きな帽子を冠ってその上をうつむいて歩&quot;| __truncated__ &quot;こんなようにして出来たきれいなお庭を、私どもはたびたび、あちこちで見ます。それは畑の豆の木の下や、林の楢の木の&quot;| __truncated__ ...
+#&gt;  $ sentences_shift_jis: chr [1:50] &quot;すると森の奥の方で何かパチパチ音がしました。&quot; &quot;「うん。その次に千つぶって云ったねい。千つぶでもよかったねい。」&quot; &quot;日が強く照るときは岩は乾いてまっ白に見え、たて横に走ったひび割れもあり、大きな帽子を冠ってその上をうつむいて歩&quot;| __truncated__ &quot;こんなようにして出来たきれいなお庭を、私どもはたびたび、あちこちで見ます。それは畑の豆の木の下や、林の楢の木の&quot;| __truncated__ ...
 #&gt;  - attr(*, &quot;spec&quot;)=
 #&gt;   .. cols(
 #&gt;   ..   rowid = col_double(),
@@ -362,63 +364,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-6"><a href="index.html#cb21-6"></a>  <span class="dt">sudachipy =</span> sudachir<span class="op">::</span><span class="kw">form</span>(csv<span class="op">$</span>sentences[<span class="dv">1</span>], <span class="dt">mode =</span> <span class="st">&quot;A&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;surface&quot;</span>),</span>
 <span id="cb21-7"><a href="index.html#cb21-7"></a>  <span class="dt">times =</span> 50L</span>
 <span id="cb21-8"><a href="index.html#cb21-8"></a>)</span></code></pre></div>
-<pre><code>#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 76 tokens</code></pre>
+<pre><code>#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens
+#&gt; Parsed to 17 tokens</code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="index.html#cb23-1"></a><span class="kw">summary</span>(tm)</span></code></pre></div>
-<pre><code>#&gt;        expr      min       lq      mean    median       uq       max neval
-#&gt; 1   RMeCabC   3.5085   3.6791  10.24060   3.79895   3.9184  323.4823    50
-#&gt; 2    cmecab  10.3129  10.7334  11.86212  10.99020  11.7301   28.0770    50
-#&gt; 3    kagome   5.2369   5.6572  46.99897   5.88660   6.2525 2051.2947    50
-#&gt; 4  kuromoji 455.0807 485.5426 513.85966 510.08055 534.4906  645.7204    50
-#&gt; 5 sudachipy 648.6409 687.0448 720.68907 702.24485 721.5899 1527.3092    50</code></pre>
+<pre><code>#&gt;        expr      min       lq       mean    median       uq       max neval
+#&gt; 1   RMeCabC   2.6697   2.9443   4.732862   3.07815   3.3998   82.2132    50
+#&gt; 2    cmecab   9.7422  10.3093  27.797602  10.89655  13.6096  765.2277    50
+#&gt; 3    kagome   1.4597   1.7534  51.514736   1.81970   2.1135 2459.8447    50
+#&gt; 4  kuromoji 106.9825 110.8610 132.043908 123.78735 140.7594  267.8276    50
+#&gt; 5 sudachipy 156.4249 161.9705 193.445184 174.38975 203.2930  594.2226    50</code></pre>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="index.html#cb25-1"></a>ggplot2<span class="op">::</span><span class="kw">autoplot</span>(tm)</span></code></pre></div>
 <pre><code>#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
 <p><img src="nlp100-knocks-r_files/figure-html/bench-plot_1-1.png" width="672" /></p>
@@ -435,269 +437,263 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb27-6"><a href="index.html#cb27-6"></a>  <span class="dt">sudachipy =</span> sudachir<span class="op">::</span><span class="kw">form</span>(csv<span class="op">$</span>sentences, <span class="dt">mode =</span> <span class="st">&quot;A&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;surface&quot;</span>),</span>
 <span id="cb27-7"><a href="index.html#cb27-7"></a>  <span class="dt">times =</span> 5L</span>
 <span id="cb27-8"><a href="index.html#cb27-8"></a>)</span></code></pre></div>
-<pre><code>#&gt; Parsed to 76 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 217 tokens
-#&gt; Parsed to 21 tokens
-#&gt; Parsed to 18 tokens
-#&gt; Parsed to 19 tokens
-#&gt; Parsed to 125 tokens
-#&gt; Parsed to 22 tokens
-#&gt; Parsed to 20 tokens
+<pre><code>#&gt; Parsed to 17 tokens
+#&gt; Parsed to 23 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 37 tokens
 #&gt; Parsed to 14 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 28 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 49 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 90 tokens
-#&gt; Parsed to 15 tokens
-#&gt; Parsed to 20 tokens
-#&gt; Parsed to 39 tokens
-#&gt; Parsed to 54 tokens
-#&gt; Parsed to 10 tokens
+#&gt; Parsed to 93 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 4 tokens
 #&gt; Parsed to 1 token
-#&gt; Parsed to 84 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 1 token
+#&gt; Parsed to 10 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 3 tokens
 #&gt; Parsed to 5 tokens
-#&gt; Parsed to 179 tokens
+#&gt; Parsed to 7 tokens
+#&gt; Parsed to 8 tokens
 #&gt; Parsed to 51 tokens
-#&gt; Parsed to 99 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 38 tokens
 #&gt; Parsed to 9 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 155 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 20 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 42 tokens
+#&gt; Parsed to 45 tokens
+#&gt; Parsed to 24 tokens
+#&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
 #&gt; Parsed to 12 tokens
-#&gt; Parsed to 62 tokens
-#&gt; Parsed to 134 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 69 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 9 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 43 tokens
+#&gt; Parsed to 63 tokens
+#&gt; Parsed to 60 tokens
 #&gt; Parsed to 46 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 2 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 32 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 44 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 217 tokens
-#&gt; Parsed to 21 tokens
-#&gt; Parsed to 18 tokens
-#&gt; Parsed to 19 tokens
-#&gt; Parsed to 125 tokens
-#&gt; Parsed to 22 tokens
-#&gt; Parsed to 20 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 25 tokens
+#&gt; Parsed to 16 tokens
 #&gt; Parsed to 14 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 110 tokens
+#&gt; Parsed to 50 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 36 tokens
 #&gt; Parsed to 7 tokens
-#&gt; Parsed to 28 tokens
+#&gt; Parsed to 23 tokens
 #&gt; Parsed to 17 tokens
-#&gt; Parsed to 49 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 90 tokens
-#&gt; Parsed to 15 tokens
-#&gt; Parsed to 20 tokens
-#&gt; Parsed to 39 tokens
-#&gt; Parsed to 54 tokens
-#&gt; Parsed to 10 tokens
+#&gt; Parsed to 23 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 37 tokens
+#&gt; Parsed to 14 tokens
+#&gt; Parsed to 93 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 4 tokens
 #&gt; Parsed to 1 token
-#&gt; Parsed to 84 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 1 token
+#&gt; Parsed to 10 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 3 tokens
 #&gt; Parsed to 5 tokens
-#&gt; Parsed to 179 tokens
+#&gt; Parsed to 7 tokens
+#&gt; Parsed to 8 tokens
 #&gt; Parsed to 51 tokens
-#&gt; Parsed to 99 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 38 tokens
 #&gt; Parsed to 9 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 155 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 20 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 42 tokens
+#&gt; Parsed to 45 tokens
+#&gt; Parsed to 24 tokens
+#&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
 #&gt; Parsed to 12 tokens
-#&gt; Parsed to 62 tokens
-#&gt; Parsed to 134 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 69 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 9 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 43 tokens
+#&gt; Parsed to 63 tokens
+#&gt; Parsed to 60 tokens
 #&gt; Parsed to 46 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 2 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 32 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 44 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 217 tokens
-#&gt; Parsed to 21 tokens
-#&gt; Parsed to 18 tokens
-#&gt; Parsed to 19 tokens
-#&gt; Parsed to 125 tokens
-#&gt; Parsed to 22 tokens
-#&gt; Parsed to 20 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 25 tokens
+#&gt; Parsed to 16 tokens
 #&gt; Parsed to 14 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 110 tokens
+#&gt; Parsed to 50 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 36 tokens
 #&gt; Parsed to 7 tokens
-#&gt; Parsed to 28 tokens
+#&gt; Parsed to 23 tokens
 #&gt; Parsed to 17 tokens
-#&gt; Parsed to 49 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 90 tokens
-#&gt; Parsed to 15 tokens
-#&gt; Parsed to 20 tokens
-#&gt; Parsed to 39 tokens
-#&gt; Parsed to 54 tokens
-#&gt; Parsed to 10 tokens
+#&gt; Parsed to 23 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 37 tokens
+#&gt; Parsed to 14 tokens
+#&gt; Parsed to 93 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 4 tokens
 #&gt; Parsed to 1 token
-#&gt; Parsed to 84 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 1 token
+#&gt; Parsed to 10 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 3 tokens
 #&gt; Parsed to 5 tokens
-#&gt; Parsed to 179 tokens
+#&gt; Parsed to 7 tokens
+#&gt; Parsed to 8 tokens
 #&gt; Parsed to 51 tokens
-#&gt; Parsed to 99 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 38 tokens
 #&gt; Parsed to 9 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 155 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 20 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 42 tokens
+#&gt; Parsed to 45 tokens
+#&gt; Parsed to 24 tokens
+#&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
 #&gt; Parsed to 12 tokens
-#&gt; Parsed to 62 tokens
-#&gt; Parsed to 134 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 69 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 9 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 43 tokens
+#&gt; Parsed to 63 tokens
+#&gt; Parsed to 60 tokens
 #&gt; Parsed to 46 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 2 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 32 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 44 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 217 tokens
-#&gt; Parsed to 21 tokens
-#&gt; Parsed to 18 tokens
-#&gt; Parsed to 19 tokens
-#&gt; Parsed to 125 tokens
-#&gt; Parsed to 22 tokens
-#&gt; Parsed to 20 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 25 tokens
+#&gt; Parsed to 16 tokens
 #&gt; Parsed to 14 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 110 tokens
+#&gt; Parsed to 50 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 36 tokens
 #&gt; Parsed to 7 tokens
-#&gt; Parsed to 28 tokens
+#&gt; Parsed to 23 tokens
 #&gt; Parsed to 17 tokens
-#&gt; Parsed to 49 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 90 tokens
-#&gt; Parsed to 15 tokens
-#&gt; Parsed to 20 tokens
-#&gt; Parsed to 39 tokens
-#&gt; Parsed to 54 tokens
-#&gt; Parsed to 10 tokens
+#&gt; Parsed to 23 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 37 tokens
+#&gt; Parsed to 14 tokens
+#&gt; Parsed to 93 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 4 tokens
 #&gt; Parsed to 1 token
-#&gt; Parsed to 84 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 1 token
+#&gt; Parsed to 10 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 3 tokens
 #&gt; Parsed to 5 tokens
-#&gt; Parsed to 179 tokens
+#&gt; Parsed to 7 tokens
+#&gt; Parsed to 8 tokens
 #&gt; Parsed to 51 tokens
-#&gt; Parsed to 99 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 38 tokens
 #&gt; Parsed to 9 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 155 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 20 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 42 tokens
+#&gt; Parsed to 45 tokens
+#&gt; Parsed to 24 tokens
+#&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
 #&gt; Parsed to 12 tokens
-#&gt; Parsed to 62 tokens
-#&gt; Parsed to 134 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 69 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 9 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 43 tokens
+#&gt; Parsed to 63 tokens
+#&gt; Parsed to 60 tokens
 #&gt; Parsed to 46 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 2 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 32 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 44 tokens
-#&gt; Parsed to 76 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 217 tokens
-#&gt; Parsed to 21 tokens
-#&gt; Parsed to 18 tokens
-#&gt; Parsed to 19 tokens
-#&gt; Parsed to 125 tokens
-#&gt; Parsed to 22 tokens
-#&gt; Parsed to 20 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 25 tokens
+#&gt; Parsed to 16 tokens
 #&gt; Parsed to 14 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 110 tokens
+#&gt; Parsed to 50 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 36 tokens
 #&gt; Parsed to 7 tokens
-#&gt; Parsed to 28 tokens
+#&gt; Parsed to 23 tokens
 #&gt; Parsed to 17 tokens
-#&gt; Parsed to 49 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 90 tokens
-#&gt; Parsed to 15 tokens
-#&gt; Parsed to 20 tokens
-#&gt; Parsed to 39 tokens
-#&gt; Parsed to 54 tokens
-#&gt; Parsed to 10 tokens
+#&gt; Parsed to 23 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 65 tokens
+#&gt; Parsed to 37 tokens
+#&gt; Parsed to 14 tokens
+#&gt; Parsed to 93 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 4 tokens
 #&gt; Parsed to 1 token
-#&gt; Parsed to 84 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 1 token
+#&gt; Parsed to 10 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 3 tokens
 #&gt; Parsed to 5 tokens
-#&gt; Parsed to 179 tokens
+#&gt; Parsed to 7 tokens
+#&gt; Parsed to 8 tokens
 #&gt; Parsed to 51 tokens
-#&gt; Parsed to 99 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 38 tokens
 #&gt; Parsed to 9 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 155 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 20 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 42 tokens
+#&gt; Parsed to 45 tokens
+#&gt; Parsed to 24 tokens
+#&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
 #&gt; Parsed to 12 tokens
-#&gt; Parsed to 62 tokens
-#&gt; Parsed to 134 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 69 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 9 tokens
-#&gt; Parsed to 83 tokens
-#&gt; Parsed to 11 tokens
+#&gt; Parsed to 43 tokens
+#&gt; Parsed to 63 tokens
+#&gt; Parsed to 60 tokens
 #&gt; Parsed to 46 tokens
-#&gt; Parsed to 35 tokens
-#&gt; Parsed to 2 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 32 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 25 tokens
+#&gt; Parsed to 16 tokens
+#&gt; Parsed to 14 tokens
 #&gt; Parsed to 27 tokens
-#&gt; Parsed to 35 tokens
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 110 tokens
+#&gt; Parsed to 50 tokens
 #&gt; Parsed to 8 tokens
-#&gt; Parsed to 44 tokens</code></pre>
+#&gt; Parsed to 36 tokens
+#&gt; Parsed to 7 tokens
+#&gt; Parsed to 23 tokens</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="index.html#cb29-1"></a><span class="kw">summary</span>(tm)</span></code></pre></div>
-<pre><code>#&gt;        expr        min         lq        mean     median         uq        max
-#&gt; 1   RMeCabC   161.5786   161.7273   942.52946   167.9177   180.5608  4040.8629
-#&gt; 2    cmecab    17.8933    19.1262    21.23404    19.7103    19.8848    29.5556
-#&gt; 3    kagome   165.4570   171.1482   188.76636   200.9857   202.0018   204.2391
-#&gt; 4  kuromoji 15091.1454 15223.0478 15442.75782 15435.8821 15564.3639 15899.3499
-#&gt; 5 sudachipy 19335.1247 19651.4244 22570.03608 20420.7962 20643.3564 32799.4787
-#&gt;   neval
-#&gt; 1     5
-#&gt; 2     5
-#&gt; 3     5
-#&gt; 4     5
-#&gt; 5     5</code></pre>
+<pre><code>#&gt;        expr        min         lq       mean     median         uq        max neval
+#&gt; 1   RMeCabC   148.9700   152.9067   160.1827   161.1724   161.7656   176.0988     5
+#&gt; 2    cmecab    18.4187    18.6218  1009.7648    19.3165    20.2745  4972.1923     5
+#&gt; 3    kagome   132.0658   138.0055   149.3276   138.8254   151.1924   186.5489     5
+#&gt; 4  kuromoji 12179.7837 12392.1588 12667.4751 12775.0521 12851.7185 13138.6625     5
+#&gt; 5 sudachipy 15341.9385 15910.1130 20345.5447 15912.9144 16760.8361 37801.9215     5</code></pre>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="index.html#cb31-1"></a>ggplot2<span class="op">::</span><span class="kw">autoplot</span>(tm)</span></code></pre></div>
 <pre><code>#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
 <p><img src="nlp100-knocks-r_files/figure-html/bench-plot_2-1.png" width="672" /></p>
