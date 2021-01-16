@@ -1,0 +1,6 @@
+# セッション情報
+
+```{r session_info}
+sessioninfo::session_info()
+```
+

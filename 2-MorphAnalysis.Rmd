@@ -1,0 +1,177 @@
+# 形態素解析
+
+## データの読み込み
+
+readtextで読みこんでおきます。
+
+```{r morph-readtext}
+temp <- tempfile(fileext = ".txt")
+download.file("https://nlp100.github.io/data/neko.txt", temp)
+neko <- readtext::readtext(temp, encoding = "UTF-8")
+neko$text[1] %>%
+  readr::read_lines(skip_empty_rows = TRUE) %>%
+  length()
+```
+
+## 形態素解析
+
+### 30. 形態素解析結果の読み込み
+
+RMeCabは必要な情報を取りづらいので、[paithiov909/RcppKagome](https://paithiov909.github.io/rcppkagome/)を使います。RcppMeCabでもできますが、公式のリポジトリのソースはWindows環境だとビルドにコケるのでUNIX系の環境が必要です（2021年1月現在）。
+
+すべて解析すると時間がかかるのでここでは一部だけ使います。
+
+```{r morph-30}
+neko_txt_mecab <- neko %>%
+  dplyr::slice(1:1000) %>%
+  dplyr::pull("text") %>%
+  RcppKagome::kagome() %>%
+  RcppKagome::prettify()
+
+head(neko_txt_mecab)
+```
+
+### 31. 動詞
+
+```{r morph-31}
+neko_txt_mecab %>%
+  dplyr::filter(POS1 == "動詞") %>%
+  dplyr::select(Surface) %>%
+  head()
+```
+
+### 32. 動詞の原形
+
+```{r morph-32}
+neko_txt_mecab %>%
+  dplyr::filter(POS1 == "動詞") %>%
+  dplyr::select(Original) %>%
+  head()
+```
+
+### 33. 「AのB」
+
+```{r morph-33}
+neko_txt_mecab %>%
+  tibble::rowid_to_column() %>%
+  dplyr::filter(Surface == "の") %>%
+  dplyr::pull(rowid) %>%
+  purrr::keep(~ neko_txt_mecab$POS1[. - 1] == "名詞" && neko_txt_mecab$POS1[. + 1] == "名詞") %>%
+  purrr::map_chr(~ stringr::str_c(
+    neko_txt_mecab$Surface[. - 1],
+    neko_txt_mecab$Surface[.],
+    neko_txt_mecab$Surface[. + 1],
+    collapse = ""
+  )) %>%
+  head(30L)
+```
+
+### 34. 名詞の連接
+
+これよくわからない。探索する処理が重いので`dplyr::sample_frac`でサンプルを減らしています。
+
+```{r morph-34}
+idx <- neko_txt_mecab %>%
+  tibble::rowid_to_column() %>%
+  dplyr::filter(POS1 == "名詞") %>%
+  dplyr::sample_frac(0.1) %>%
+  dplyr::pull(rowid) %>%
+  purrr::discard(~ neko_txt_mecab$POS1[. + 1] != "名詞")
+
+search_in <- idx
+
+purrr::map_chr(search_in, function(idx) {
+  itr <- idx
+  res <- stringr::str_c(neko_txt_mecab$Surface[idx])
+  while (neko_txt_mecab$POS1[itr + 1] == "名詞") {
+    res <- stringr::str_c(res, neko_txt_mecab$Surface[itr + 1])
+    search_in <<- purrr::discard(search_in, ~ . == itr + 1)
+    itr <- itr + 1
+    next
+  }
+  return(res)
+}) %>%
+  head(30L)
+```
+
+### 35. 単語の出現頻度
+
+```{r morph-35}
+neko_txt_mecab %>%
+  dplyr::group_by(Original) %>%
+  dplyr::count(Original, sort = TRUE) %>%
+  head()
+```
+
+### 36. 頻度上位10語
+
+```{r morph-36}
+neko_txt_mecab %>%
+  dplyr::group_by(Original) %>%
+  dplyr::count(Original, sort = TRUE) %>%
+  head(10) %>%
+  ggplot(aes(x = reorder(Original, -n), y = n)) +
+  geom_col() +
+  labs(x = "Surface form") +
+  theme_light()
+```
+
+### 37. 「猫」と共起頻度の高い上位10語
+
+解釈のしかたが複数あるけれど、ここではbi-gramを数えてお茶をにごします。
+
+```{r morph-37}
+neko_txt_mecab %>%
+  tibble::rowid_to_column() %>%
+  dplyr::filter(Surface == "猫") %>%
+  dplyr::mutate(Collocation = stringr::str_c(Surface, neko_txt_mecab$Surface[rowid + 1], sep = " - ")) %>%
+  dplyr::group_by(Sid, Collocation) %>%
+  dplyr::count(Collocation, sort = TRUE) %>%
+  head(10L) %>%
+  ggplot2::ggplot(aes(x = reorder(Collocation, -n), y = n)) +
+  ggplot2::geom_col() +
+  ggplot2::labs(x = "Collocation", y = "Freq") +
+  ggplot2::theme_light()
+```
+
+### 38. ヒストグラム
+
+```{r morph-38}
+neko_txt_mecab %>%
+  dplyr::group_by(Original) %>%
+  dplyr::count(Original) %>%
+  ggplot2::ggplot(aes(x = reorder(Original, -n), y = n)) +
+  ggplot2::geom_col() +
+  ggplot2::labs(x = "", y = "Freq") +
+  ggplot2::scale_y_log10() +
+  ggplot2::theme_light()
+```
+
+### 39. Zipfの法則
+
+```{r morph-39}
+count <- neko_txt_mecab %>%
+  dplyr::group_by(Original) %>%
+  dplyr::count(Original) %>%
+  dplyr::ungroup()
+count %>%
+  tibble::rowid_to_column() %>%
+  dplyr::mutate(rank = nrow(count) + 1 - dplyr::min_rank(count$n)[rowid]) %>%
+  ggplot2::ggplot(aes(x = rank, y = n)) +
+  ggplot2::geom_point() +
+  ggplot2::labs(x = "Rank of Freq", y = "Freq") +
+  ggplot2::scale_x_log10() +
+  ggplot2::scale_y_log10() +
+  ggplot2::theme_light()
+```
+
+```{r clean_up-morph, include=FALSE}
+remove(neko)
+remove(neko_txt_mecab)
+remove(idx)
+remove(search_in)
+remove(count)
+gc()
+gc()
+```
+

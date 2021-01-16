@@ -1,0 +1,151 @@
+--- 
+title: "Rで言語処理100本ノックを解くわけがない"
+author: "Kato Akiru"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません"
+url: "https://paithiov909.github.io/nlp100-knocks-r"
+github-repo: "paithiov909/nlp100-knocks-r"
+cover-image: "images/coverimage.jpg"
+favicon: "images/favicon.ico"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  tidy = "styler",
+  comment = "#>"
+)
+```
+
+# Rで言語処理100本ノックを解くわけがない
+
+## 本書について
+
+Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。
+
+Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません。中盤以降もできそうなのでやろうとは思っていますが、実際にやる見通しは立てていません。
+
+## 全体の見通し
+
+2020年版に触ってみますが、ぜんぶは解きません。無理です。
+
+- [言語処理100本ノック 2020](https://nlp100.github.io/ja/)
+
+ググって出てくる範囲では2015年版にはyamano357さんが取り組んでいます。RcppでMeCabとCaboChaのバインディングを自分で書いて解いている本格派です。
+
+- [Rによる言語処理100本ノック前半まとめ - バイアスと戯れる](http://yamano357.hatenadiary.com/entry/2015/07/27/001728)
+- [Rによる言語処理100本ノック後半まとめと全体での総括 - バイアスと戯れる](http://yamano357.hatenadiary.com/entry/2015/10/22/193839)
+
+2020年版もやろうとしている人がいるようです。
+
+- [言語処理100本ノック R - Qiita](https://qiita.com/PiyoMoasa/items/7c1a6cca3f9cbcaf7773)
+
+2020年版も7章の単語ベクトルあたりまではPure Rでいけそうですが、おそらく8章のディープ・ニューラルネットあたりからバックエンドにPythonを利用することになり、10章の最終題の翻訳デモの構築でふつうにPythonを利用しなければならなくなるはずなので詰みます。
+
+## 使用する環境など
+
+本書はWindows10 (64bit) でチャンクを実行してビルドしています。
+
+### MeCab/CaboCha
+
+- MeCab (0.996)
+- CaboCha (0.69)
+
+### Rパッケージ
+
+使用するおもなパッケージです。
+
+```{r load_packages}
+stopifnot(
+  require(tidymodels),
+  require(RcppKagome),
+  require(pipian),
+  require(textrecipes),
+  ## 以下はこのセクションでのみ使うもの ##
+  require(RMeCab),
+  require(rjavacmecab),
+  require(tangela),
+  require(sudachir)
+)
+```
+
+## 資料
+
+参考としてRで形態素解析するパッケージの速度比較をします。
+
+以下を試しています。
+
+- RMeCab::RMeCabC
+- rjavacmecab::cmecab
+- RcppKagome::kagome
+- tangela::kuromoji
+- sudachir::form(mode = "A", type = "surface")
+
+以下は解析する文書のサンプル。
+
+```{r bench-prep_1}
+csv <- file.path("miyazawa_kenji_head.csv") %>%
+  readr::read_csv() %>%
+  dplyr::sample_n(50L) %>%
+  dplyr::mutate(
+    sentences_shift_jis = iconv(sentences, from = "UTF-8", to = "CP932")
+  )
+
+str(csv)
+```
+
+#### Tokenize Character Scalar
+
+ひとつの文について繰り返し解析する場合。
+
+```{r bench-summary_1, message=FALSE, warning=FALSE}
+tm <- microbenchmark::microbenchmark(
+  RMeCabC = RMeCabC(csv$sentences_shift_jis[1]),
+  cmecab = cmecab(csv$sentences[1]),
+  kagome = kagome(csv$sentences[1]),
+  kuromoji = kuromoji(csv$sentences[1]),
+  sudachipy = sudachir::form(csv$sentences[1], mode = "A", type = "surface"),
+  times = 50L
+)
+
+summary(tm)
+```
+
+```{r bench-plot_1}
+ggplot2::autoplot(tm)
+```
+
+### Tokenize Character Vector
+
+50文を長さ`50`のベクトルとして与える場合。
+
+RMeCab::RMeCabCとtangela::kuromojiは長さが1のベクトル（character scalar）しか受けつけないため、ここではsapplyでラップしています。なお、rjavacmecab::cmecabについては、ベクトルを与えられた場合は要素を改行でcollapseしてひとつの文にして解析するため、他とは挙動が異なります。
+
+```{r bench-summary_2, message=FALSE, warning=FALSE}
+tm <- microbenchmark::microbenchmark(
+  RMeCabC = sapply(csv$sentences_shift_jis, RMeCabC),
+  cmecab = cmecab(csv$sentences),
+  kagome = kagome(csv$sentences),
+  kuromoji = sapply(csv$sentences, kuromoji),
+  sudachipy = sudachir::form(csv$sentences, mode = "A", type = "surface"),
+  times = 5L
+)
+
+summary(tm)
+```
+
+```{r bench-plot_2}
+ggplot2::autoplot(tm)
+```
+
+```{r clean_up-index, include=FALSE}
+remove(csv)
+remove(tm)
+gc()
+gc()
+```
+

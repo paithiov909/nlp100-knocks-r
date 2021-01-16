@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 セッション情報 | Rで言語処理100本ノックを解くわけがない</title>
+  <meta name="description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 セッション情報 | Rで言語処理100本ノックを解くわけがない" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://paithiov909.github.io/nlp100-knocks-r" />
+  <meta property="og:image" content="https://paithiov909.github.io/nlp100-knocks-rimages/coverimage.jpg" />
+  <meta property="og:description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta name="github-repo" content="paithiov909/nlp100-knocks-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 セッション情報 | Rで言語処理100本ノックを解くわけがない" />
+  
+  <meta name="twitter:description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta name="twitter:image" content="https://paithiov909.github.io/nlp100-knocks-rimages/coverimage.jpg" />
+
+<meta name="author" content="Kato Akiru" />
+
+
+<meta name="date" content="2021-01-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="係り受け解析.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Rで言語処理100本ノックを解くわけがない</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rで言語処理100本ノックを解くわけがない</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#本書について"><i class="fa fa-check"></i><b>1.1</b> 本書について</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#全体の見通し"><i class="fa fa-check"></i><b>1.2</b> 全体の見通し</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#使用する環境など"><i class="fa fa-check"></i><b>1.3</b> 使用する環境など</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#mecabcabocha"><i class="fa fa-check"></i><b>1.3.1</b> MeCab/CaboCha</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#rパッケージ"><i class="fa fa-check"></i><b>1.3.2</b> Rパッケージ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#資料"><i class="fa fa-check"></i><b>1.4</b> 資料</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#tokenize-character-vector"><i class="fa fa-check"></i><b>1.4.1</b> Tokenize Character Vector</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html"><i class="fa fa-check"></i><b>2</b> 準備運動・UNIXコマンド・正規表現</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#準備運動"><i class="fa fa-check"></i><b>2.1</b> 準備運動</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#文字列の逆順"><i class="fa fa-check"></i><b>2.1.1</b> 00. 文字列の逆順</a></li>
+<li class="chapter" data-level="2.1.2" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#パタトクカシーー"><i class="fa fa-check"></i><b>2.1.2</b> 01. 「パタトクカシーー」</a></li>
+<li class="chapter" data-level="2.1.3" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#パトカータクシーパタトクカシーー"><i class="fa fa-check"></i><b>2.1.3</b> 02. 「パトカー」＋「タクシー」＝「パタトクカシーー」</a></li>
+<li class="chapter" data-level="2.1.4" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#円周率"><i class="fa fa-check"></i><b>2.1.4</b> 03. 円周率</a></li>
+<li class="chapter" data-level="2.1.5" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#元素記号"><i class="fa fa-check"></i><b>2.1.5</b> 04. 元素記号</a></li>
+<li class="chapter" data-level="2.1.6" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#n-gram"><i class="fa fa-check"></i><b>2.1.6</b> 05. n-gram</a></li>
+<li class="chapter" data-level="2.1.7" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#集合"><i class="fa fa-check"></i><b>2.1.7</b> 06. 集合</a></li>
+<li class="chapter" data-level="2.1.8" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#テンプレートによる文生成"><i class="fa fa-check"></i><b>2.1.8</b> 07. テンプレートによる文生成</a></li>
+<li class="chapter" data-level="2.1.9" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#暗号文"><i class="fa fa-check"></i><b>2.1.9</b> 08. 暗号文</a></li>
+<li class="chapter" data-level="2.1.10" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#typoglycemia"><i class="fa fa-check"></i><b>2.1.10</b> 09. Typoglycemia</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#unixコマンド"><i class="fa fa-check"></i><b>2.2</b> UNIXコマンド</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#section"><i class="fa fa-check"></i><b>2.2.1</b> 10~15</a></li>
+<li class="chapter" data-level="2.2.2" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#ファイルをn分割する"><i class="fa fa-check"></i><b>2.2.2</b> 16. ファイルをN分割する</a></li>
+<li class="chapter" data-level="2.2.3" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#列目の文字列の異なり"><i class="fa fa-check"></i><b>2.2.3</b> 17. １列目の文字列の異なり</a></li>
+<li class="chapter" data-level="2.2.4" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#各行を3コラム目の数値の降順にソート"><i class="fa fa-check"></i><b>2.2.4</b> 18. 各行を3コラム目の数値の降順にソート</a></li>
+<li class="chapter" data-level="2.2.5" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#各行の1コラム目の文字列の出現頻度を求め出現頻度の高い順に並べる"><i class="fa fa-check"></i><b>2.2.5</b> 19. 各行の1コラム目の文字列の出現頻度を求め，出現頻度の高い順に並べる</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#正規表現"><i class="fa fa-check"></i><b>2.3</b> 正規表現</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#jsonデータの読み込み"><i class="fa fa-check"></i><b>2.3.1</b> 20. JSONデータの読み込み</a></li>
+<li class="chapter" data-level="2.3.2" data-path="準備運動unixコマンド正規表現.html"><a href="準備運動unixコマンド正規表現.html#カテゴリ名を含む行を抽出"><i class="fa fa-check"></i><b>2.3.2</b> 21. カテゴリ名を含む行を抽出</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="形態素解析.html"><a href="形態素解析.html"><i class="fa fa-check"></i><b>3</b> 形態素解析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="形態素解析.html"><a href="形態素解析.html#データの読み込み"><i class="fa fa-check"></i><b>3.1</b> データの読み込み</a></li>
+<li class="chapter" data-level="3.2" data-path="形態素解析.html"><a href="形態素解析.html#形態素解析-1"><i class="fa fa-check"></i><b>3.2</b> 形態素解析</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="形態素解析.html"><a href="形態素解析.html#形態素解析結果の読み込み"><i class="fa fa-check"></i><b>3.2.1</b> 30. 形態素解析結果の読み込み</a></li>
+<li class="chapter" data-level="3.2.2" data-path="形態素解析.html"><a href="形態素解析.html#動詞"><i class="fa fa-check"></i><b>3.2.2</b> 31. 動詞</a></li>
+<li class="chapter" data-level="3.2.3" data-path="形態素解析.html"><a href="形態素解析.html#動詞の原形"><i class="fa fa-check"></i><b>3.2.3</b> 32. 動詞の原形</a></li>
+<li class="chapter" data-level="3.2.4" data-path="形態素解析.html"><a href="形態素解析.html#aのb"><i class="fa fa-check"></i><b>3.2.4</b> 33. 「AのB」</a></li>
+<li class="chapter" data-level="3.2.5" data-path="形態素解析.html"><a href="形態素解析.html#名詞の連接"><i class="fa fa-check"></i><b>3.2.5</b> 34. 名詞の連接</a></li>
+<li class="chapter" data-level="3.2.6" data-path="形態素解析.html"><a href="形態素解析.html#単語の出現頻度"><i class="fa fa-check"></i><b>3.2.6</b> 35. 単語の出現頻度</a></li>
+<li class="chapter" data-level="3.2.7" data-path="形態素解析.html"><a href="形態素解析.html#頻度上位10語"><i class="fa fa-check"></i><b>3.2.7</b> 36. 頻度上位10語</a></li>
+<li class="chapter" data-level="3.2.8" data-path="形態素解析.html"><a href="形態素解析.html#猫と共起頻度の高い上位10語"><i class="fa fa-check"></i><b>3.2.8</b> 37. 「猫」と共起頻度の高い上位10語</a></li>
+<li class="chapter" data-level="3.2.9" data-path="形態素解析.html"><a href="形態素解析.html#ヒストグラム"><i class="fa fa-check"></i><b>3.2.9</b> 38. ヒストグラム</a></li>
+<li class="chapter" data-level="3.2.10" data-path="形態素解析.html"><a href="形態素解析.html#zipfの法則"><i class="fa fa-check"></i><b>3.2.10</b> 39. Zipfの法則</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="係り受け解析.html"><a href="係り受け解析.html"><i class="fa fa-check"></i><b>4</b> 係り受け解析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="係り受け解析.html"><a href="係り受け解析.html#データの読み込み-1"><i class="fa fa-check"></i><b>4.1</b> データの読み込み</a></li>
+<li class="chapter" data-level="4.2" data-path="係り受け解析.html"><a href="係り受け解析.html#係り受け解析-1"><i class="fa fa-check"></i><b>4.2</b> 係り受け解析</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="係り受け解析.html"><a href="係り受け解析.html#係り受け解析結果の読み込み形態素"><i class="fa fa-check"></i><b>4.2.1</b> 40. 係り受け解析結果の読み込み（形態素）</a></li>
+<li class="chapter" data-level="4.2.2" data-path="係り受け解析.html"><a href="係り受け解析.html#係り受け解析結果の読み込み文節係り受け"><i class="fa fa-check"></i><b>4.2.2</b> 41. 係り受け解析結果の読み込み（文節・係り受け）</a></li>
+<li class="chapter" data-level="4.2.3" data-path="係り受け解析.html"><a href="係り受け解析.html#係り元と係り先の文節の表示"><i class="fa fa-check"></i><b>4.2.3</b> 42. 係り元と係り先の文節の表示</a></li>
+<li class="chapter" data-level="4.2.4" data-path="係り受け解析.html"><a href="係り受け解析.html#名詞を含む文節が動詞を含む文節に係るものを抽出"><i class="fa fa-check"></i><b>4.2.4</b> 43. 名詞を含む文節が動詞を含む文節に係るものを抽出</a></li>
+<li class="chapter" data-level="4.2.5" data-path="係り受け解析.html"><a href="係り受け解析.html#係り受け木の可視化"><i class="fa fa-check"></i><b>4.2.5</b> 44. 係り受け木の可視化</a></li>
+<li class="chapter" data-level="4.2.6" data-path="係り受け解析.html"><a href="係り受け解析.html#動詞の格パターンの抽出"><i class="fa fa-check"></i><b>4.2.6</b> 45. 動詞の格パターンの抽出</a></li>
+<li class="chapter" data-level="4.2.7" data-path="係り受け解析.html"><a href="係り受け解析.html#動詞の格フレーム情報の抽出"><i class="fa fa-check"></i><b>4.2.7</b> 46. 動詞の格フレーム情報の抽出</a></li>
+<li class="chapter" data-level="4.2.8" data-path="係り受け解析.html"><a href="係り受け解析.html#機能動詞構文のマイニング"><i class="fa fa-check"></i><b>4.2.8</b> 47. 機能動詞構文のマイニング</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="セッション情報.html"><a href="セッション情報.html"><i class="fa fa-check"></i><b>5</b> セッション情報</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rで言語処理100本ノックを解くわけがない</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="セッション情報" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> セッション情報</h1>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="セッション情報.html#cb104-1"></a>sessioninfo<span class="op">::</span><span class="kw">session_info</span>()</span></code></pre></div>
+<pre><code>#&gt; - Session info -------------------------------------------------------------------
+#&gt;  setting  value                       
+#&gt;  version  R version 4.0.3 (2020-10-10)
+#&gt;  os       Windows 10 x64              
+#&gt;  system   x86_64, mingw32             
+#&gt;  ui       RStudio                     
+#&gt;  language (EN)                        
+#&gt;  collate  Japanese_Japan.932          
+#&gt;  ctype    Japanese_Japan.932          
+#&gt;  tz       Asia/Tokyo                  
+#&gt;  date     2021-01-16                  
+#&gt; 
+#&gt; - Packages -----------------------------------------------------------------------
+#&gt;  ! package        * version    date       lib
+#&gt;  P assertthat       0.2.1      2019-03-21 [?]
+#&gt;  P backports        1.2.1      2020-12-09 [?]
+#&gt;  P bookdown         0.21       2020-10-13 [?]
+#&gt;  P broom          * 0.7.3      2020-12-16 [?]
+#&gt;  P class            7.3-17     2020-04-26 [?]
+#&gt;  P cli              2.2.0      2020-11-20 [?]
+#&gt;  P codetools        0.2-16     2018-12-24 [?]
+#&gt;  P colorspace       2.0-0      2020-11-11 [?]
+#&gt;  P crayon           1.3.4      2017-09-16 [?]
+#&gt;  P data.table       1.13.6     2020-12-30 [?]
+#&gt;  P dials          * 0.0.9      2020-09-16 [?]
+#&gt;  P DiceDesign       1.8-1      2019-07-31 [?]
+#&gt;  P digest           0.6.27     2020-10-24 [?]
+#&gt;    dplyr          * 1.0.2      2020-08-18 [1]
+#&gt;  P ellipsis         0.3.1      2020-05-15 [?]
+#&gt;  P evaluate         0.14       2019-05-28 [?]
+#&gt;  P fansi            0.4.1      2020-01-08 [?]
+#&gt;  P farver           2.0.3      2020-01-16 [?]
+#&gt;    flatxml          0.1.1      2020-12-01 [1]
+#&gt;  P foreach          1.5.1      2020-10-15 [?]
+#&gt;    furrr            0.2.1      2020-10-21 [1]
+#&gt;    future           1.21.0     2020-12-10 [1]
+#&gt;    generics         0.1.0      2020-10-31 [1]
+#&gt;  P ggplot2        * 3.3.3      2020-12-30 [?]
+#&gt;    globals          0.14.0     2020-11-22 [1]
+#&gt;  P glue             1.4.2      2020-08-27 [?]
+#&gt;  P gower            0.2.2      2020-06-23 [?]
+#&gt;  P GPfit            1.0-8      2019-02-08 [?]
+#&gt;  P gtable           0.3.0      2019-03-25 [?]
+#&gt;    hms              1.0.0      2021-01-13 [1]
+#&gt;  P htmltools        0.5.1      2021-01-12 [?]
+#&gt;  P httr             1.4.2      2020-07-20 [?]
+#&gt;    igraph           1.2.6      2020-10-06 [1]
+#&gt;  P infer          * 0.5.4      2021-01-13 [?]
+#&gt;  P ipred            0.9-9      2019-04-28 [?]
+#&gt;  P iterators        1.0.13     2020-10-15 [?]
+#&gt;  P jsonlite         1.7.2      2020-12-09 [?]
+#&gt;  P knitr            1.30       2020-09-22 [?]
+#&gt;  P labeling         0.4.2      2020-10-20 [?]
+#&gt;  P lattice          0.20-41    2020-04-02 [?]
+#&gt;  P lava             1.6.8.1    2020-11-04 [?]
+#&gt;  P lhs              1.1.1      2020-10-05 [?]
+#&gt;  P lifecycle        0.2.0      2020-03-06 [?]
+#&gt;    listenv          0.8.0      2019-12-05 [1]
+#&gt;  P lubridate        1.7.9.2    2020-11-13 [?]
+#&gt;  P magrittr         2.0.1      2020-11-17 [?]
+#&gt;  P MASS             7.3-53     2020-09-09 [?]
+#&gt;  P Matrix           1.2-18     2019-11-27 [?]
+#&gt;  P microbenchmark   1.4-7      2019-09-24 [?]
+#&gt;  P modeldata      * 0.1.0      2020-10-22 [?]
+#&gt;  P munsell          0.5.0      2018-06-12 [?]
+#&gt;  P nnet             7.3-14     2020-04-26 [?]
+#&gt;    parallelly       1.23.0     2021-01-04 [1]
+#&gt;  P parsnip        * 0.1.4      2020-10-27 [?]
+#&gt;  P pillar           1.4.7      2020-11-20 [?]
+#&gt;    pipian         * 0.2.3-2    2021-01-16 [1]
+#&gt;  P pkgconfig        2.0.3      2019-09-22 [?]
+#&gt;  P plyr             1.8.6      2020-03-03 [?]
+#&gt;  P pROC             1.17.0.1   2021-01-13 [?]
+#&gt;  P prodlim          2019.11.13 2019-11-17 [?]
+#&gt;  P purrr          * 0.3.4      2020-04-17 [?]
+#&gt;  P R.cache          0.14.0     2019-12-06 [?]
+#&gt;  P R.methodsS3      1.8.1      2020-08-26 [?]
+#&gt;  P R.oo             1.24.0     2020-08-26 [?]
+#&gt;  P R.utils          2.10.1     2020-08-26 [?]
+#&gt;  P R6               2.5.0      2020-10-28 [?]
+#&gt;  P rappdirs         0.3.1      2016-03-28 [?]
+#&gt;  P Rcpp             1.0.5      2020-07-06 [?]
+#&gt;    RcppKagome     * 0.0.0.400  2021-01-15 [1]
+#&gt;    readr            1.4.0      2020-10-05 [1]
+#&gt;  P readtext         0.80       2020-09-22 [?]
+#&gt;  P recipes        * 0.1.15     2020-11-11 [?]
+#&gt;    renv             0.12.5     2021-01-09 [1]
+#&gt;  P reticulate     * 1.18       2020-10-25 [?]
+#&gt;  D rJava            0.9-13     2020-07-06 [1]
+#&gt;    rjavacmecab    * 0.1.8      2021-01-15 [1]
+#&gt;  P rlang            0.4.10     2020-12-30 [?]
+#&gt;  P rmarkdown        2.6        2020-12-14 [?]
+#&gt;    RMeCab         * 1.06       2021-01-11 [1]
+#&gt;  P rpart            4.1-15     2019-04-12 [?]
+#&gt;  P rsample        * 0.0.8      2020-09-23 [?]
+#&gt;  P rstudioapi       0.13       2020-11-12 [?]
+#&gt;    rvest            0.3.6      2020-07-25 [1]
+#&gt;  P scales         * 1.1.1      2020-05-11 [?]
+#&gt;  P sessioninfo      1.1.1      2018-11-05 [?]
+#&gt;  P stringi          1.5.3      2020-09-09 [?]
+#&gt;  P stringr          1.4.0      2019-02-10 [?]
+#&gt;  P styler           1.3.2      2020-02-23 [?]
+#&gt;  P sudachir       * 0.1.0      2020-11-10 [?]
+#&gt;  P survival         3.2-7      2020-09-28 [?]
+#&gt;    tangela        * 0.0.4-4    2021-01-15 [1]
+#&gt;  P textrecipes    * 0.4.0      2020-11-12 [?]
+#&gt;  P tibble         * 3.0.4      2020-10-12 [?]
+#&gt;  P tidymodels     * 0.1.2      2020-11-22 [?]
+#&gt;    tidyr          * 1.1.2      2020-08-27 [1]
+#&gt;    tidyselect       1.1.0      2020-05-11 [1]
+#&gt;  P timeDate         3043.102   2018-02-21 [?]
+#&gt;  P tune           * 0.1.2      2020-11-17 [?]
+#&gt;  P utf8             1.1.4      2018-05-24 [?]
+#&gt;  P vctrs            0.3.6      2020-12-17 [?]
+#&gt;  P withr            2.3.0      2020-09-22 [?]
+#&gt;  P workflows      * 0.2.1      2020-10-08 [?]
+#&gt;  P xfun             0.20       2021-01-06 [?]
+#&gt;  P xml2             1.3.2      2020-04-23 [?]
+#&gt;  P yaml             2.2.1      2020-02-01 [?]
+#&gt;  P yardstick      * 0.0.7      2020-07-13 [?]
+#&gt;  source                                  
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  Github (paithiov909/pipian@80b97e7)     
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  Github (paithiov909/RcppKagome@c1ae259) 
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  Github (paithiov909/rjavacmecab@3210ded)
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  local                                   
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  Github (paithiov909/tangela@2a23e1c)    
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.0)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.3)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt;  CRAN (R 4.0.0)                          
+#&gt;  CRAN (R 4.0.2)                          
+#&gt; 
+#&gt; [1] C:/Users/user/Documents/GitHub/nlp100-knocks-r/renv/library/R-4.0/x86_64-w64-mingw32
+#&gt; [2] C:/Users/user/AppData/Local/Temp/RtmpqM1knF/renv-system-library
+#&gt; 
+#&gt;  P -- Loaded and on-disk path mismatch.
+#&gt;  D -- DLL MD5 mismatch, broken installation.</code></pre>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="係り受け解析.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["nlp100-knocks-r.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
