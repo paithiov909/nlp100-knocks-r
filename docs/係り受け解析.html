@@ -5,26 +5,26 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 係り受け解析 | Rで言語処理100本ノックを解くわけがない</title>
-  <meta name="description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta name="description" content="Rで言語処理100本ノック 2020に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 係り受け解析 | Rで言語処理100本ノックを解くわけがない" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://paithiov909.github.io/nlp100-knocks-r" />
-  <meta property="og:image" content="https://paithiov909.github.io/nlp100-knocks-rimages/coverimage.jpg" />
-  <meta property="og:description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta property="og:image" content="https://paithiov909.github.io/nlp100-knocks-r/images/coverimage.jpg" />
+  <meta property="og:description" content="Rで言語処理100本ノック 2020に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
   <meta name="github-repo" content="paithiov909/nlp100-knocks-r" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 4 係り受け解析 | Rで言語処理100本ノックを解くわけがない" />
   
-  <meta name="twitter:description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
-  <meta name="twitter:image" content="https://paithiov909.github.io/nlp100-knocks-rimages/coverimage.jpg" />
+  <meta name="twitter:description" content="Rで言語処理100本ノック 2020に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta name="twitter:image" content="https://paithiov909.github.io/nlp100-knocks-r/images/coverimage.jpg" />
 
 <meta name="author" content="Kato Akiru" />
 
 
-<meta name="date" content="2021-01-16" />
+<meta name="date" content="2021-01-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -236,13 +235,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 4</span> 係り受け解析</h1>
 <div id="データの読み込み-1" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> データの読み込み</h2>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="係り受け解析.html#cb83-1"></a>temp &lt;-<span class="st"> </span><span class="kw">tempfile</span>(<span class="dt">fileext =</span> <span class="st">&quot;.zip&quot;</span>)</span>
-<span id="cb83-2"><a href="係り受け解析.html#cb83-2"></a><span class="kw">download.file</span>(<span class="st">&quot;https://nlp100.github.io/data/ai.ja.zip&quot;</span>, temp)</span>
-<span id="cb83-3"><a href="係り受け解析.html#cb83-3"></a>temp &lt;-<span class="st"> </span><span class="kw">unzip</span>(temp, <span class="dt">exdir =</span> <span class="kw">tempdir</span>())</span>
-<span id="cb83-4"><a href="係り受け解析.html#cb83-4"></a>ai_ja &lt;-<span class="st"> </span>readtext<span class="op">::</span><span class="kw">readtext</span>(temp[<span class="dv">1</span>], <span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb83-5"><a href="係り受け解析.html#cb83-5"></a>ai_ja<span class="op">$</span>text[<span class="dv">1</span>] <span class="op">%&gt;%</span></span>
-<span id="cb83-6"><a href="係り受け解析.html#cb83-6"></a><span class="st">  </span>readr<span class="op">::</span><span class="kw">read_lines</span>(<span class="dt">skip_empty_rows =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb83-7"><a href="係り受け解析.html#cb83-7"></a><span class="st">  </span><span class="kw">length</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="係り受け解析.html#cb83-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.zip&quot;</span>)</span>
+<span id="cb83-2"><a href="係り受け解析.html#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://nlp100.github.io/data/ai.ja.zip&quot;</span>, temp)</span>
+<span id="cb83-3"><a href="係り受け解析.html#cb83-3" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">unzip</span>(temp, <span class="at">exdir =</span> <span class="fu">tempdir</span>())</span>
+<span id="cb83-4"><a href="係り受け解析.html#cb83-4" aria-hidden="true" tabindex="-1"></a>ai_ja <span class="ot">&lt;-</span> readtext<span class="sc">::</span><span class="fu">readtext</span>(temp[<span class="dv">1</span>], <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb83-5"><a href="係り受け解析.html#cb83-5" aria-hidden="true" tabindex="-1"></a>ai_ja<span class="sc">$</span>text[<span class="dv">1</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb83-6"><a href="係り受け解析.html#cb83-6" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_lines</span>(<span class="at">skip_empty_rows =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb83-7"><a href="係り受け解析.html#cb83-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>()</span></code></pre></div>
 <pre><code>#&gt; [1] 83</code></pre>
 </div>
 <div id="係り受け解析-1" class="section level2" number="4.2">
@@ -250,45 +249,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="係り受け解析結果の読み込み形態素" class="section level3" number="4.2.1">
 <h3><span class="header-section-number">4.2.1</span> 40. 係り受け解析結果の読み込み（形態素）</h3>
 <p>ここでは<a href="https://paithiov909.github.io/pipian">paithiov909/pipian</a>を使います。設問の通りにクラスを実装したりはしませんが、だいたい似たような情報を出力できます。ただし、ここでは解析するのはごく一部だけにしています。</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="係り受け解析.html#cb85-1"></a>res &lt;-<span class="st"> </span>ai_ja<span class="op">$</span>text[<span class="dv">1</span>] <span class="op">%&gt;%</span></span>
-<span id="cb85-2"><a href="係り受け解析.html#cb85-2"></a><span class="st">  </span>readr<span class="op">::</span><span class="kw">read_lines</span>(<span class="dt">skip_empty_rows =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb85-3"><a href="係り受け解析.html#cb85-3"></a>res &lt;-<span class="st"> </span>res <span class="op">%&gt;%</span></span>
-<span id="cb85-4"><a href="係り受け解析.html#cb85-4"></a><span class="st">  </span><span class="kw">sample</span>(20L) <span class="op">%&gt;%</span></span>
-<span id="cb85-5"><a href="係り受け解析.html#cb85-5"></a><span class="st">  </span><span class="kw">iconv</span>(<span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;CP932&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb85-6"><a href="係り受け解析.html#cb85-6"></a><span class="st">  </span>purrr<span class="op">::</span><span class="kw">discard</span>(<span class="op">~</span><span class="st"> </span><span class="kw">is.na</span>(.)) <span class="op">%&gt;%</span></span>
-<span id="cb85-7"><a href="係り受け解析.html#cb85-7"></a><span class="st">  </span>pipian<span class="op">::</span><span class="kw">cabochaFlatXML</span>()</span>
-<span id="cb85-8"><a href="係り受け解析.html#cb85-8"></a></span>
-<span id="cb85-9"><a href="係り受け解析.html#cb85-9"></a>res &lt;-<span class="st"> </span>pipian<span class="op">::</span><span class="kw">CabochaR</span>(res)<span class="op">$</span><span class="kw">as_tibble</span>()</span>
-<span id="cb85-10"><a href="係り受け解析.html#cb85-10"></a><span class="kw">head</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="係り受け解析.html#cb85-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> ai_ja<span class="sc">$</span>text[<span class="dv">1</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb85-2"><a href="係り受け解析.html#cb85-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_lines</span>(<span class="at">skip_empty_rows =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb85-3"><a href="係り受け解析.html#cb85-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span></span>
+<span id="cb85-4"><a href="係り受け解析.html#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(20L) <span class="sc">%&gt;%</span></span>
+<span id="cb85-5"><a href="係り受け解析.html#cb85-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">iconv</span>(<span class="at">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="at">to =</span> <span class="st">&quot;CP932&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb85-6"><a href="係り受け解析.html#cb85-6" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">discard</span>(<span class="sc">~</span> <span class="fu">is.na</span>(.)) <span class="sc">%&gt;%</span></span>
+<span id="cb85-7"><a href="係り受け解析.html#cb85-7" aria-hidden="true" tabindex="-1"></a>  pipian<span class="sc">::</span><span class="fu">cabochaFlatXML</span>()</span>
+<span id="cb85-8"><a href="係り受け解析.html#cb85-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-9"><a href="係り受け解析.html#cb85-9" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> pipian<span class="sc">::</span><span class="fu">CabochaR</span>(res)<span class="sc">$</span><span class="fu">as_tibble</span>()</span>
+<span id="cb85-10"><a href="係り受け解析.html#cb85-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code></pre></div>
 <pre><code>#&gt; # A tibble: 6 x 20
 #&gt;   sentence_idx chunk_idx D1    D2    rel   score head  func  tok_idx ne_value word 
 #&gt;          &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;
-#&gt; 1            1         3 0     1     D     1.39~ 1     1           1 I-DATE   年   
-#&gt; 2            1         6 1     7     D     0.05~ 3     5           3 I-DATE   月   
-#&gt; 3            1         6 1     7     D     0.05~ 3     5           4 O        に   
-#&gt; 4            1         6 1     7     D     0.05~ 3     5           5 O        は   
-#&gt; 5            1        11 2     7     D     0.69~ 9     10          6 B-PERSON ジェフリ~
-#&gt; 6            1        11 2     7     D     0.69~ 9     10          7 I-PERSON ・   
+#&gt; 1            1         3 0     17    D     0.04~ 2     3           0 B-LOCAT~ フランス~
+#&gt; 2            1         3 0     17    D     0.04~ 2     3           1 O        大統領~
+#&gt; 3            1         3 0     17    D     0.04~ 2     3           3 O        は   
+#&gt; 4            1         8 1     2     D     1.61~ 5     6           5 O        分野 
+#&gt; 5            1         8 1     2     D     1.61~ 5     6           6 O        の   
+#&gt; 6            1        12 2     3     D     1.87~ 8     9           7 O        開発 
 #&gt; # ... with 9 more variables: POS1 &lt;chr&gt;, POS2 &lt;chr&gt;, POS3 &lt;chr&gt;, POS4 &lt;chr&gt;,
 #&gt; #   X5StageUse1 &lt;chr&gt;, X5StageUse2 &lt;chr&gt;, Original &lt;chr&gt;, Yomi1 &lt;chr&gt;, Yomi2 &lt;chr&gt;</code></pre>
 <p>3文目の形態素列</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="係り受け解析.html#cb87-1"></a>res <span class="op">%&gt;%</span></span>
-<span id="cb87-2"><a href="係り受け解析.html#cb87-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sentence_idx <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></span>
-<span id="cb87-3"><a href="係り受け解析.html#cb87-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(word)</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 200 x 1
-#&gt;    word          
-#&gt;    &lt;chr&gt;         
-#&gt;  1 プログラミング
-#&gt;  2 言語          
-#&gt;  3 による        
-#&gt;  4 「            
-#&gt;  5 」            
-#&gt;  6 という        
-#&gt;  7 カウンセラー  
-#&gt;  8 を            
-#&gt;  9 模倣          
-#&gt; 10 し            
-#&gt; # ... with 190 more rows</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="係り受け解析.html#cb87-1" aria-hidden="true" tabindex="-1"></a>res <span class="sc">%&gt;%</span></span>
+<span id="cb87-2"><a href="係り受け解析.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(sentence_idx <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb87-3"><a href="係り受け解析.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(word)</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 17 x 1
+#&gt;    word        
+#&gt;    &lt;chr&gt;       
+#&gt;  1 アメリカ    
+#&gt;  2 で          
+#&gt;  3 は          
+#&gt;  4 年          
+#&gt;  5 に          
+#&gt;  6 時          
+#&gt;  7 の          
+#&gt;  8 大統領      
+#&gt;  9 が          
+#&gt; 10 脳          
+#&gt; 11 研究        
+#&gt; 12 プロジェクト
+#&gt; 13 「          
+#&gt; 14 」          
+#&gt; 15 を          
+#&gt; 16 発表        
+#&gt; 17 。</code></pre>
 </div>
 <div id="係り受け解析結果の読み込み文節係り受け" class="section level3" number="4.2.2">
 <h3><span class="header-section-number">4.2.2</span> 41. 係り受け解析結果の読み込み（文節・係り受け）</h3>
@@ -296,292 +301,290 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="係り元と係り先の文節の表示" class="section level3" number="4.2.3">
 <h3><span class="header-section-number">4.2.3</span> 42. 係り元と係り先の文節の表示</h3>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="係り受け解析.html#cb89-1"></a>memo &lt;-<span class="st"> </span>res <span class="op">%&gt;%</span></span>
-<span id="cb89-2"><a href="係り受け解析.html#cb89-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POS1 <span class="op">!=</span><span class="st"> &quot;記号&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb89-3"><a href="係り受け解析.html#cb89-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx) <span class="op">%&gt;%</span></span>
-<span id="cb89-4"><a href="係り受け解析.html#cb89-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(</span>
-<span id="cb89-5"><a href="係り受け解析.html#cb89-5"></a>    <span class="dt">chunk =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb89-6"><a href="係り受け解析.html#cb89-6"></a>      word,</span>
-<span id="cb89-7"><a href="係り受け解析.html#cb89-7"></a>      <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb89-8"><a href="係り受け解析.html#cb89-8"></a>    )</span>
-<span id="cb89-9"><a href="係り受け解析.html#cb89-9"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb89-10"><a href="係り受け解析.html#cb89-10"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb89-11"><a href="係り受け解析.html#cb89-11"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(sentence_idx, chunk_idx, D1, D2, chunk) <span class="op">%&gt;%</span></span>
-<span id="cb89-12"><a href="係り受け解析.html#cb89-12"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">distinct</span>()</span>
-<span id="cb89-13"><a href="係り受け解析.html#cb89-13"></a></span>
-<span id="cb89-14"><a href="係り受け解析.html#cb89-14"></a>memo <span class="op">%&gt;%</span></span>
-<span id="cb89-15"><a href="係り受け解析.html#cb89-15"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(D2 <span class="op">!=</span><span class="st"> </span><span class="dv">-1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb89-16"><a href="係り受け解析.html#cb89-16"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx, D1) <span class="op">%&gt;%</span></span>
-<span id="cb89-17"><a href="係り受け解析.html#cb89-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">collocation =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb89-18"><a href="係り受け解析.html#cb89-18"></a>    chunk,</span>
-<span id="cb89-19"><a href="係り受け解析.html#cb89-19"></a>    memo<span class="op">$</span>chunk[memo<span class="op">$</span>sentence_idx <span class="op">==</span><span class="st"> </span>.data<span class="op">$</span>sentence_idx <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>D1 <span class="op">==</span><span class="st"> </span>.data<span class="op">$</span>D2],</span>
-<span id="cb89-20"><a href="係り受け解析.html#cb89-20"></a>    <span class="dt">sep =</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb89-21"><a href="係り受け解析.html#cb89-21"></a>  )) <span class="op">%&gt;%</span></span>
-<span id="cb89-22"><a href="係り受け解析.html#cb89-22"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb89-23"><a href="係り受け解析.html#cb89-23"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(chunk, collocation) <span class="op">%&gt;%</span></span>
-<span id="cb89-24"><a href="係り受け解析.html#cb89-24"></a><span class="st">  </span><span class="kw">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="係り受け解析.html#cb89-1" aria-hidden="true" tabindex="-1"></a>memo <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span></span>
+<span id="cb89-2"><a href="係り受け解析.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(POS1 <span class="sc">!=</span> <span class="st">&quot;記号&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb89-3"><a href="係り受け解析.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx) <span class="sc">%&gt;%</span></span>
+<span id="cb89-4"><a href="係り受け解析.html#cb89-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb89-5"><a href="係り受け解析.html#cb89-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">chunk =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb89-6"><a href="係り受け解析.html#cb89-6" aria-hidden="true" tabindex="-1"></a>      word,</span>
+<span id="cb89-7"><a href="係り受け解析.html#cb89-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb89-8"><a href="係り受け解析.html#cb89-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb89-9"><a href="係り受け解析.html#cb89-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb89-10"><a href="係り受け解析.html#cb89-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb89-11"><a href="係り受け解析.html#cb89-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sentence_idx, chunk_idx, D1, D2, chunk) <span class="sc">%&gt;%</span></span>
+<span id="cb89-12"><a href="係り受け解析.html#cb89-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>()</span>
+<span id="cb89-13"><a href="係り受け解析.html#cb89-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-14"><a href="係り受け解析.html#cb89-14" aria-hidden="true" tabindex="-1"></a>memo <span class="sc">%&gt;%</span></span>
+<span id="cb89-15"><a href="係り受け解析.html#cb89-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(D2 <span class="sc">!=</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb89-16"><a href="係り受け解析.html#cb89-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx, D1) <span class="sc">%&gt;%</span></span>
+<span id="cb89-17"><a href="係り受け解析.html#cb89-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">collocation =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb89-18"><a href="係り受け解析.html#cb89-18" aria-hidden="true" tabindex="-1"></a>    chunk,</span>
+<span id="cb89-19"><a href="係り受け解析.html#cb89-19" aria-hidden="true" tabindex="-1"></a>    memo<span class="sc">$</span>chunk[memo<span class="sc">$</span>sentence_idx <span class="sc">==</span> .data<span class="sc">$</span>sentence_idx <span class="sc">&amp;</span> memo<span class="sc">$</span>D1 <span class="sc">==</span> .data<span class="sc">$</span>D2],</span>
+<span id="cb89-20"><a href="係り受け解析.html#cb89-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb89-21"><a href="係り受け解析.html#cb89-21" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb89-22"><a href="係り受け解析.html#cb89-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb89-23"><a href="係り受け解析.html#cb89-23" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(chunk, collocation) <span class="sc">%&gt;%</span></span>
+<span id="cb89-24"><a href="係り受け解析.html#cb89-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>#&gt; # A tibble: 6 x 2
-#&gt;   chunk                    collocation                        
-#&gt;   &lt;chr&gt;                    &lt;chr&gt;                              
-#&gt; 1 年                       年 月には                          
-#&gt; 2 月には                   月には 学習できる                  
-#&gt; 3 ジェフリーヒントンにより ジェフリーヒントンにより 学習できる
-#&gt; 4 要素間の                 要素間の 位置関係まで              
-#&gt; 5 相対的な                 相対的な 位置関係まで              
-#&gt; 6 位置関係まで             位置関係まで 含めて</code></pre>
+#&gt;   chunk            collocation              
+#&gt;   &lt;chr&gt;            &lt;chr&gt;                    
+#&gt; 1 フランス大統領は フランス大統領は 招致した
+#&gt; 2 分野の           分野の 開発支援に        
+#&gt; 3 開発支援に       開発支援に 向け          
+#&gt; 4 向け             向け 支出すると          
+#&gt; 5 年で             年で 支出すると          
+#&gt; 6 億ドル           億ドル 約億円を</code></pre>
 </div>
 <div id="名詞を含む文節が動詞を含む文節に係るものを抽出" class="section level3" number="4.2.4">
 <h3><span class="header-section-number">4.2.4</span> 43. 名詞を含む文節が動詞を含む文節に係るものを抽出</h3>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="係り受け解析.html#cb91-1"></a>memo &lt;-<span class="st"> </span>res <span class="op">%&gt;%</span></span>
-<span id="cb91-2"><a href="係り受け解析.html#cb91-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx) <span class="op">%&gt;%</span></span>
-<span id="cb91-3"><a href="係り受け解析.html#cb91-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(</span>
-<span id="cb91-4"><a href="係り受け解析.html#cb91-4"></a>    <span class="dt">chunk =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb91-5"><a href="係り受け解析.html#cb91-5"></a>      word,</span>
-<span id="cb91-6"><a href="係り受け解析.html#cb91-6"></a>      <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb91-7"><a href="係り受け解析.html#cb91-7"></a>    )</span>
-<span id="cb91-8"><a href="係り受け解析.html#cb91-8"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb91-9"><a href="係り受け解析.html#cb91-9"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb91-10"><a href="係り受け解析.html#cb91-10"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">tag =</span> POS1 <span class="op">==</span><span class="st"> &quot;動詞&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb91-11"><a href="係り受け解析.html#cb91-11"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(sentence_idx, chunk_idx, D1, D2, chunk, POS1, tag) <span class="op">%&gt;%</span></span>
-<span id="cb91-12"><a href="係り受け解析.html#cb91-12"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">distinct</span>()</span>
-<span id="cb91-13"><a href="係り受け解析.html#cb91-13"></a></span>
-<span id="cb91-14"><a href="係り受け解析.html#cb91-14"></a>memo <span class="op">%&gt;%</span></span>
-<span id="cb91-15"><a href="係り受け解析.html#cb91-15"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POS1 <span class="op">==</span><span class="st"> &quot;名詞&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb91-16"><a href="係り受け解析.html#cb91-16"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(D2 <span class="op">!=</span><span class="st"> </span><span class="dv">-1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb91-17"><a href="係り受け解析.html#cb91-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx, D1) <span class="op">%&gt;%</span></span>
-<span id="cb91-18"><a href="係り受け解析.html#cb91-18"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">collocation =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb91-19"><a href="係り受け解析.html#cb91-19"></a>    chunk,</span>
-<span id="cb91-20"><a href="係り受け解析.html#cb91-20"></a>    memo<span class="op">$</span>chunk[memo<span class="op">$</span>sentence_idx <span class="op">==</span><span class="st"> </span>.data<span class="op">$</span>sentence_idx <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>D1 <span class="op">==</span><span class="st"> </span>.data<span class="op">$</span>D2 <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>tag <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>],</span>
-<span id="cb91-21"><a href="係り受け解析.html#cb91-21"></a>    <span class="dt">sep =</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb91-22"><a href="係り受け解析.html#cb91-22"></a>  )) <span class="op">%&gt;%</span></span>
-<span id="cb91-23"><a href="係り受け解析.html#cb91-23"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb91-24"><a href="係り受け解析.html#cb91-24"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(chunk, collocation) <span class="op">%&gt;%</span></span>
-<span id="cb91-25"><a href="係り受け解析.html#cb91-25"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(chunk <span class="op">!=</span><span class="st"> </span>collocation) <span class="op">%&gt;%</span></span>
-<span id="cb91-26"><a href="係り受け解析.html#cb91-26"></a><span class="st">  </span><span class="kw">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="係り受け解析.html#cb91-1" aria-hidden="true" tabindex="-1"></a>memo <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span></span>
+<span id="cb91-2"><a href="係り受け解析.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx) <span class="sc">%&gt;%</span></span>
+<span id="cb91-3"><a href="係り受け解析.html#cb91-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb91-4"><a href="係り受け解析.html#cb91-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">chunk =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb91-5"><a href="係り受け解析.html#cb91-5" aria-hidden="true" tabindex="-1"></a>      word,</span>
+<span id="cb91-6"><a href="係り受け解析.html#cb91-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb91-7"><a href="係り受け解析.html#cb91-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb91-8"><a href="係り受け解析.html#cb91-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb91-9"><a href="係り受け解析.html#cb91-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb91-10"><a href="係り受け解析.html#cb91-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">tag =</span> POS1 <span class="sc">==</span> <span class="st">&quot;動詞&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb91-11"><a href="係り受け解析.html#cb91-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sentence_idx, chunk_idx, D1, D2, chunk, POS1, tag) <span class="sc">%&gt;%</span></span>
+<span id="cb91-12"><a href="係り受け解析.html#cb91-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>()</span>
+<span id="cb91-13"><a href="係り受け解析.html#cb91-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-14"><a href="係り受け解析.html#cb91-14" aria-hidden="true" tabindex="-1"></a>memo <span class="sc">%&gt;%</span></span>
+<span id="cb91-15"><a href="係り受け解析.html#cb91-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(POS1 <span class="sc">==</span> <span class="st">&quot;名詞&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb91-16"><a href="係り受け解析.html#cb91-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(D2 <span class="sc">!=</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb91-17"><a href="係り受け解析.html#cb91-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx, D1) <span class="sc">%&gt;%</span></span>
+<span id="cb91-18"><a href="係り受け解析.html#cb91-18" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">collocation =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb91-19"><a href="係り受け解析.html#cb91-19" aria-hidden="true" tabindex="-1"></a>    chunk,</span>
+<span id="cb91-20"><a href="係り受け解析.html#cb91-20" aria-hidden="true" tabindex="-1"></a>    memo<span class="sc">$</span>chunk[memo<span class="sc">$</span>sentence_idx <span class="sc">==</span> .data<span class="sc">$</span>sentence_idx <span class="sc">&amp;</span> memo<span class="sc">$</span>D1 <span class="sc">==</span> .data<span class="sc">$</span>D2 <span class="sc">&amp;</span> memo<span class="sc">$</span>tag <span class="sc">==</span> <span class="cn">TRUE</span>],</span>
+<span id="cb91-21"><a href="係り受け解析.html#cb91-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb91-22"><a href="係り受け解析.html#cb91-22" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb91-23"><a href="係り受け解析.html#cb91-23" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb91-24"><a href="係り受け解析.html#cb91-24" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(chunk, collocation) <span class="sc">%&gt;%</span></span>
+<span id="cb91-25"><a href="係り受け解析.html#cb91-25" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(chunk <span class="sc">!=</span> collocation) <span class="sc">%&gt;%</span></span>
+<span id="cb91-26"><a href="係り受け解析.html#cb91-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>#&gt; # A tibble: 6 x 2
-#&gt;   chunk                      collocation                          
-#&gt;   &lt;chr&gt;                      &lt;chr&gt;                                
-#&gt; 1 月には                     月には 学習できる                    
-#&gt; 2 ジェフリー・ヒントンにより ジェフリー・ヒントンにより 学習できる
-#&gt; 3 位置関係まで               位置関係まで 含めて                  
-#&gt; 4 カプセルネットワークが     カプセルネットワークが 提唱された。  
-#&gt; 5 哲学者は、                 哲学者は、 語ろうとしてきた。        
-#&gt; 6 科学とは                   科学とは 違う</code></pre>
+#&gt;   chunk            collocation                
+#&gt;   &lt;chr&gt;            &lt;chr&gt;                      
+#&gt; 1 フランス大統領は フランス大統領は 招致した。
+#&gt; 2 開発支援に       開発支援に 向け            
+#&gt; 3 年で             年で 支出すると            
+#&gt; 4 （約億円）を     （約億円）を 支出すると    
+#&gt; 5 支出すると       支出すると 宣言し、        
+#&gt; 6 宣言し、         宣言し、 開き、</code></pre>
 </div>
 <div id="係り受け木の可視化" class="section level3" number="4.2.5">
 <h3><span class="header-section-number">4.2.5</span> 44. 係り受け木の可視化</h3>
 <p>そういう関数があるのでサボります。</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="係り受け解析.html#cb93-1"></a>memo &lt;-<span class="st"> </span>ai_ja<span class="op">$</span>text[<span class="dv">1</span>] <span class="op">%&gt;%</span></span>
-<span id="cb93-2"><a href="係り受け解析.html#cb93-2"></a><span class="st">  </span>readr<span class="op">::</span><span class="kw">read_lines</span>(<span class="dt">skip_empty_rows =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb93-3"><a href="係り受け解析.html#cb93-3"></a>memo &lt;-<span class="st"> </span>memo[<span class="dv">12</span>] <span class="op">%&gt;%</span></span>
-<span id="cb93-4"><a href="係り受け解析.html#cb93-4"></a><span class="st">  </span><span class="kw">iconv</span>(<span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;CP932&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb93-5"><a href="係り受け解析.html#cb93-5"></a><span class="st">  </span>pipian<span class="op">::</span><span class="kw">CabochaTbl</span>()</span>
-<span id="cb93-6"><a href="係り受け解析.html#cb93-6"></a>memo<span class="op">$</span><span class="kw">plot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="係り受け解析.html#cb93-1" aria-hidden="true" tabindex="-1"></a>memo <span class="ot">&lt;-</span> ai_ja<span class="sc">$</span>text[<span class="dv">1</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb93-2"><a href="係り受け解析.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_lines</span>(<span class="at">skip_empty_rows =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb93-3"><a href="係り受け解析.html#cb93-3" aria-hidden="true" tabindex="-1"></a>memo <span class="ot">&lt;-</span> memo[<span class="dv">12</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb93-4"><a href="係り受け解析.html#cb93-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">iconv</span>(<span class="at">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="at">to =</span> <span class="st">&quot;CP932&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb93-5"><a href="係り受け解析.html#cb93-5" aria-hidden="true" tabindex="-1"></a>  pipian<span class="sc">::</span><span class="fu">CabochaTbl</span>()</span>
+<span id="cb93-6"><a href="係り受け解析.html#cb93-6" aria-hidden="true" tabindex="-1"></a>memo<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
 <p><img src="nlp100-knocks-r_files/figure-html/dep-44-1.png" width="672" /></p>
 </div>
 <div id="動詞の格パターンの抽出" class="section level3" number="4.2.6">
 <h3><span class="header-section-number">4.2.6</span> 45. 動詞の格パターンの抽出</h3>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="係り受け解析.html#cb94-1"></a>memo &lt;-<span class="st"> </span>res <span class="op">%&gt;%</span></span>
-<span id="cb94-2"><a href="係り受け解析.html#cb94-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(sentence_idx, chunk_idx, D1, D2, POS1, Original)</span>
-<span id="cb94-3"><a href="係り受け解析.html#cb94-3"></a></span>
-<span id="cb94-4"><a href="係り受け解析.html#cb94-4"></a>pattern &lt;-<span class="st"> </span>memo <span class="op">%&gt;%</span></span>
-<span id="cb94-5"><a href="係り受け解析.html#cb94-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POS1 <span class="op">==</span><span class="st"> &quot;動詞&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb94-6"><a href="係り受け解析.html#cb94-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx, D1) <span class="op">%&gt;%</span></span>
-<span id="cb94-7"><a href="係り受け解析.html#cb94-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_map</span>(<span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span></span>
-<span id="cb94-8"><a href="係り受け解析.html#cb94-8"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">collocation =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb94-9"><a href="係り受け解析.html#cb94-9"></a>      <span class="st">&quot;&quot;</span>,</span>
-<span id="cb94-10"><a href="係り受け解析.html#cb94-10"></a>      memo<span class="op">$</span>Original[memo<span class="op">$</span>sentence_idx <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>sentence_idx <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>D2 <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>D1 <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>POS1 <span class="op">==</span><span class="st"> &quot;助詞&quot;</span>],</span>
-<span id="cb94-11"><a href="係り受け解析.html#cb94-11"></a>      <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb94-12"><a href="係り受け解析.html#cb94-12"></a>    ))) <span class="op">%&gt;%</span></span>
-<span id="cb94-13"><a href="係り受け解析.html#cb94-13"></a><span class="st">  </span>purrr<span class="op">::</span><span class="kw">map_dfr</span>(<span class="op">~</span>.) <span class="op">%&gt;%</span></span>
-<span id="cb94-14"><a href="係り受け解析.html#cb94-14"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Original, collocation)</span>
-<span id="cb94-15"><a href="係り受け解析.html#cb94-15"></a></span>
-<span id="cb94-16"><a href="係り受け解析.html#cb94-16"></a>pattern</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 254 x 2
-#&gt;    Original collocation    
-#&gt;    &lt;chr&gt;    &lt;chr&gt;          
-#&gt;  1 含める   まで           
-#&gt;  2 できる   に は により て
-#&gt;  3 する     が             
-#&gt;  4 れる     が             
-#&gt;  5 違う     と は          
-#&gt;  6 語る     は で を       
-#&gt;  7 する     は で を       
-#&gt;  8 くる     は で を       
-#&gt;  9 する     と て は を    
-#&gt; 10 いる     と て は を    
-#&gt; # ... with 244 more rows</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="係り受け解析.html#cb94-1" aria-hidden="true" tabindex="-1"></a>memo <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span></span>
+<span id="cb94-2"><a href="係り受け解析.html#cb94-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sentence_idx, chunk_idx, D1, D2, POS1, Original)</span>
+<span id="cb94-3"><a href="係り受け解析.html#cb94-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-4"><a href="係り受け解析.html#cb94-4" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> memo <span class="sc">%&gt;%</span></span>
+<span id="cb94-5"><a href="係り受け解析.html#cb94-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(POS1 <span class="sc">==</span> <span class="st">&quot;動詞&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb94-6"><a href="係り受け解析.html#cb94-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx, D1) <span class="sc">%&gt;%</span></span>
+<span id="cb94-7"><a href="係り受け解析.html#cb94-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_map</span>(<span class="sc">~</span> .x <span class="sc">%&gt;%</span></span>
+<span id="cb94-8"><a href="係り受け解析.html#cb94-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">collocation =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb94-9"><a href="係り受け解析.html#cb94-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;&quot;</span>,</span>
+<span id="cb94-10"><a href="係り受け解析.html#cb94-10" aria-hidden="true" tabindex="-1"></a>      memo<span class="sc">$</span>Original[memo<span class="sc">$</span>sentence_idx <span class="sc">==</span> .y<span class="sc">$</span>sentence_idx <span class="sc">&amp;</span> memo<span class="sc">$</span>D2 <span class="sc">==</span> .y<span class="sc">$</span>D1 <span class="sc">&amp;</span> memo<span class="sc">$</span>POS1 <span class="sc">==</span> <span class="st">&quot;助詞&quot;</span>],</span>
+<span id="cb94-11"><a href="係り受け解析.html#cb94-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb94-12"><a href="係り受け解析.html#cb94-12" aria-hidden="true" tabindex="-1"></a>    ))) <span class="sc">%&gt;%</span></span>
+<span id="cb94-13"><a href="係り受け解析.html#cb94-13" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map_dfr</span>(<span class="sc">~</span>.) <span class="sc">%&gt;%</span></span>
+<span id="cb94-14"><a href="係り受け解析.html#cb94-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Original, collocation)</span>
+<span id="cb94-15"><a href="係り受け解析.html#cb94-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-16"><a href="係り受け解析.html#cb94-16" aria-hidden="true" tabindex="-1"></a>pattern</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 215 x 2
+#&gt;    Original collocation
+#&gt;    &lt;chr&gt;    &lt;chr&gt;      
+#&gt;  1 向ける   に         
+#&gt;  2 する     で を      
+#&gt;  3 する     と         
+#&gt;  4 開く     を に      
+#&gt;  5 する     は など を 
+#&gt;  6 する     も         
+#&gt;  7 れる     も         
+#&gt;  8 いる     も         
+#&gt;  9 なる     と         
+#&gt; 10 付ける   で に を   
+#&gt; # ... with 205 more rows</code></pre>
 <p>「行う」「なる」「与える」という動詞の格パターン</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="係り受け解析.html#cb96-1"></a>pattern <span class="op">%&gt;%</span></span>
-<span id="cb96-2"><a href="係り受け解析.html#cb96-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Original <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;行う&quot;</span>, <span class="st">&quot;なる&quot;</span>, <span class="st">&quot;与える&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb96-3"><a href="係り受け解析.html#cb96-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Original, collocation) <span class="op">%&gt;%</span></span>
-<span id="cb96-4"><a href="係り受け解析.html#cb96-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>()</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 16 x 3
-#&gt; # Groups:   Original, collocation [16]
-#&gt;    Original collocation           n
-#&gt;    &lt;chr&gt;    &lt;chr&gt;             &lt;int&gt;
-#&gt;  1 なる     &quot;&quot;                    1
-#&gt;  2 なる     &quot;が と&quot;               1
-#&gt;  3 なる     &quot;て て が が と&quot;      1
-#&gt;  4 なる     &quot;て は として に&quot;     1
-#&gt;  5 なる     &quot;と&quot;                  2
-#&gt;  6 なる     &quot;に は が に&quot;         1
-#&gt;  7 なる     &quot;は て&quot;               1
-#&gt;  8 なる     &quot;は に は&quot;            1
-#&gt;  9 なる     &quot;も&quot;                  1
-#&gt; 10 行う     &quot;で は が&quot;            1
-#&gt; 11 行う     &quot;て を&quot;               1
-#&gt; 12 行う     &quot;で を&quot;               1
-#&gt; 13 行う     &quot;は を&quot;               1
-#&gt; 14 行う     &quot;まで を に&quot;          1
-#&gt; 15 行う     &quot;を&quot;                  1
-#&gt; 16 行う     &quot;を に を&quot;            1</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="係り受け解析.html#cb96-1" aria-hidden="true" tabindex="-1"></a>pattern <span class="sc">%&gt;%</span></span>
+<span id="cb96-2"><a href="係り受け解析.html#cb96-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Original <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;行う&quot;</span>, <span class="st">&quot;なる&quot;</span>, <span class="st">&quot;与える&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb96-3"><a href="係り受け解析.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Original, collocation) <span class="sc">%&gt;%</span></span>
+<span id="cb96-4"><a href="係り受け解析.html#cb96-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>()</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 13 x 3
+#&gt; # Groups:   Original, collocation [13]
+#&gt;    Original collocation        n
+#&gt;    &lt;chr&gt;    &lt;chr&gt;          &lt;int&gt;
+#&gt;  1 なる     が に              1
+#&gt;  2 なる     から で と         1
+#&gt;  3 なる     て て が に は     1
+#&gt;  4 なる     と                 2
+#&gt;  5 なる     に                 1
+#&gt;  6 なる     に は で に        1
+#&gt;  7 なる     に は も           1
+#&gt;  8 なる     は て              1
+#&gt;  9 なる     も                 1
+#&gt; 10 行う     から               1
+#&gt; 11 行う     て に は は は     1
+#&gt; 12 行う     で は て が に     1
+#&gt; 13 行う     を                 2</code></pre>
 </div>
 <div id="動詞の格フレーム情報の抽出" class="section level3" number="4.2.7">
 <h3><span class="header-section-number">4.2.7</span> 46. 動詞の格フレーム情報の抽出</h3>
 <p>これを見ると助詞の連続が要件通りに表示できていないことがわかりますが、疲れたのであきらめます。</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="係り受け解析.html#cb98-1"></a>memo &lt;-<span class="st"> </span>res <span class="op">%&gt;%</span></span>
-<span id="cb98-2"><a href="係り受け解析.html#cb98-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx) <span class="op">%&gt;%</span></span>
-<span id="cb98-3"><a href="係り受け解析.html#cb98-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(</span>
-<span id="cb98-4"><a href="係り受け解析.html#cb98-4"></a>    <span class="dt">chunk =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb98-5"><a href="係り受け解析.html#cb98-5"></a>      word,</span>
-<span id="cb98-6"><a href="係り受け解析.html#cb98-6"></a>      <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb98-7"><a href="係り受け解析.html#cb98-7"></a>    )</span>
-<span id="cb98-8"><a href="係り受け解析.html#cb98-8"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb98-9"><a href="係り受け解析.html#cb98-9"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb98-10"><a href="係り受け解析.html#cb98-10"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(sentence_idx, chunk_idx, D1, D2, POS1, Original, chunk)</span>
-<span id="cb98-11"><a href="係り受け解析.html#cb98-11"></a></span>
-<span id="cb98-12"><a href="係り受け解析.html#cb98-12"></a>pattern &lt;-<span class="st"> </span>memo <span class="op">%&gt;%</span></span>
-<span id="cb98-13"><a href="係り受け解析.html#cb98-13"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POS1 <span class="op">==</span><span class="st"> &quot;動詞&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb98-14"><a href="係り受け解析.html#cb98-14"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx, D1) <span class="op">%&gt;%</span></span>
-<span id="cb98-15"><a href="係り受け解析.html#cb98-15"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_map</span>(<span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span></span>
-<span id="cb98-16"><a href="係り受け解析.html#cb98-16"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">collocation =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb98-17"><a href="係り受け解析.html#cb98-17"></a>      <span class="st">&quot;&quot;</span>,</span>
-<span id="cb98-18"><a href="係り受け解析.html#cb98-18"></a>      memo<span class="op">$</span>Original[memo<span class="op">$</span>sentence_idx <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>sentence_idx <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>D2 <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>D1 <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>POS1 <span class="op">==</span><span class="st"> &quot;助詞&quot;</span>],</span>
-<span id="cb98-19"><a href="係り受け解析.html#cb98-19"></a>      <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb98-20"><a href="係り受け解析.html#cb98-20"></a>    )) <span class="op">%&gt;%</span></span>
-<span id="cb98-21"><a href="係り受け解析.html#cb98-21"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">chunk =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb98-22"><a href="係り受け解析.html#cb98-22"></a>      <span class="st">&quot;&quot;</span>,</span>
-<span id="cb98-23"><a href="係り受け解析.html#cb98-23"></a>      memo<span class="op">$</span>chunk[memo<span class="op">$</span>sentence_idx <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>sentence_idx <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>D2 <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>D1 <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>POS1 <span class="op">==</span><span class="st"> &quot;助詞&quot;</span>],</span>
-<span id="cb98-24"><a href="係り受け解析.html#cb98-24"></a>      <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb98-25"><a href="係り受け解析.html#cb98-25"></a>    ))) <span class="op">%&gt;%</span></span>
-<span id="cb98-26"><a href="係り受け解析.html#cb98-26"></a><span class="st">  </span>purrr<span class="op">::</span><span class="kw">map_dfr</span>(<span class="op">~</span>.) <span class="op">%&gt;%</span></span>
-<span id="cb98-27"><a href="係り受け解析.html#cb98-27"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Original, collocation, chunk)</span>
-<span id="cb98-28"><a href="係り受け解析.html#cb98-28"></a></span>
-<span id="cb98-29"><a href="係り受け解析.html#cb98-29"></a>pattern</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 254 x 3
-#&gt;    Original collocation     chunk                                                   
-#&gt;    &lt;chr&gt;    &lt;chr&gt;           &lt;chr&gt;                                                   
-#&gt;  1 含める   まで            位置関係まで                                            
-#&gt;  2 できる   に は により て 月には 月には ジェフリー・ヒントンにより 含めて         
-#&gt;  3 する     が              カプセルネットワークが                                  
-#&gt;  4 れる     が              カプセルネットワークが                                  
-#&gt;  5 違う     と は           科学とは 科学とは                                       
-#&gt;  6 語る     は で を        哲学者は、 日常的言語で 「宇宙」を                      
-#&gt;  7 する     は で を        哲学者は、 日常的言語で 「宇宙」を                      
-#&gt;  8 くる     は で を        哲学者は、 日常的言語で 「宇宙」を                      
-#&gt;  9 する     と て は を     語ろうとしてきた。 語ろうとしてきた。 理論物理学者は、 哲学者を~
-#&gt; 10 いる     と て は を     語ろうとしてきた。 語ろうとしてきた。 理論物理学者は、 哲学者を~
-#&gt; # ... with 244 more rows</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="係り受け解析.html#cb98-1" aria-hidden="true" tabindex="-1"></a>memo <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span></span>
+<span id="cb98-2"><a href="係り受け解析.html#cb98-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx) <span class="sc">%&gt;%</span></span>
+<span id="cb98-3"><a href="係り受け解析.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb98-4"><a href="係り受け解析.html#cb98-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">chunk =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb98-5"><a href="係り受け解析.html#cb98-5" aria-hidden="true" tabindex="-1"></a>      word,</span>
+<span id="cb98-6"><a href="係り受け解析.html#cb98-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb98-7"><a href="係り受け解析.html#cb98-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb98-8"><a href="係り受け解析.html#cb98-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb98-9"><a href="係り受け解析.html#cb98-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb98-10"><a href="係り受け解析.html#cb98-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sentence_idx, chunk_idx, D1, D2, POS1, Original, chunk)</span>
+<span id="cb98-11"><a href="係り受け解析.html#cb98-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-12"><a href="係り受け解析.html#cb98-12" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> memo <span class="sc">%&gt;%</span></span>
+<span id="cb98-13"><a href="係り受け解析.html#cb98-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(POS1 <span class="sc">==</span> <span class="st">&quot;動詞&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb98-14"><a href="係り受け解析.html#cb98-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx, D1) <span class="sc">%&gt;%</span></span>
+<span id="cb98-15"><a href="係り受け解析.html#cb98-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_map</span>(<span class="sc">~</span> .x <span class="sc">%&gt;%</span></span>
+<span id="cb98-16"><a href="係り受け解析.html#cb98-16" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">collocation =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb98-17"><a href="係り受け解析.html#cb98-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;&quot;</span>,</span>
+<span id="cb98-18"><a href="係り受け解析.html#cb98-18" aria-hidden="true" tabindex="-1"></a>      memo<span class="sc">$</span>Original[memo<span class="sc">$</span>sentence_idx <span class="sc">==</span> .y<span class="sc">$</span>sentence_idx <span class="sc">&amp;</span> memo<span class="sc">$</span>D2 <span class="sc">==</span> .y<span class="sc">$</span>D1 <span class="sc">&amp;</span> memo<span class="sc">$</span>POS1 <span class="sc">==</span> <span class="st">&quot;助詞&quot;</span>],</span>
+<span id="cb98-19"><a href="係り受け解析.html#cb98-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb98-20"><a href="係り受け解析.html#cb98-20" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">%&gt;%</span></span>
+<span id="cb98-21"><a href="係り受け解析.html#cb98-21" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">chunk =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb98-22"><a href="係り受け解析.html#cb98-22" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;&quot;</span>,</span>
+<span id="cb98-23"><a href="係り受け解析.html#cb98-23" aria-hidden="true" tabindex="-1"></a>      memo<span class="sc">$</span>chunk[memo<span class="sc">$</span>sentence_idx <span class="sc">==</span> .y<span class="sc">$</span>sentence_idx <span class="sc">&amp;</span> memo<span class="sc">$</span>D2 <span class="sc">==</span> .y<span class="sc">$</span>D1 <span class="sc">&amp;</span> memo<span class="sc">$</span>POS1 <span class="sc">==</span> <span class="st">&quot;助詞&quot;</span>],</span>
+<span id="cb98-24"><a href="係り受け解析.html#cb98-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb98-25"><a href="係り受け解析.html#cb98-25" aria-hidden="true" tabindex="-1"></a>    ))) <span class="sc">%&gt;%</span></span>
+<span id="cb98-26"><a href="係り受け解析.html#cb98-26" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map_dfr</span>(<span class="sc">~</span>.) <span class="sc">%&gt;%</span></span>
+<span id="cb98-27"><a href="係り受け解析.html#cb98-27" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Original, collocation, chunk)</span>
+<span id="cb98-28"><a href="係り受け解析.html#cb98-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-29"><a href="係り受け解析.html#cb98-29" aria-hidden="true" tabindex="-1"></a>pattern</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 215 x 3
+#&gt;    Original collocation chunk                                     
+#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;                                     
+#&gt;  1 向ける   に          開発支援に                                
+#&gt;  2 する     で を       年で （約億円）を                         
+#&gt;  3 する     と          支出すると                                
+#&gt;  4 開く     を に       研究所を パリに                           
+#&gt;  5 する     は など を  フランス大統領は 富士通などを 富士通などを
+#&gt;  6 する     も          連携も                                    
+#&gt;  7 れる     も          連携も                                    
+#&gt;  8 いる     も          連携も                                    
+#&gt;  9 なる     と          計算資源と                                
+#&gt; 10 付ける   で に を    画像処理コンテストで 手法に 圧倒的大差を  
+#&gt; # ... with 205 more rows</code></pre>
 </div>
 <div id="機能動詞構文のマイニング" class="section level3" number="4.2.8">
 <h3><span class="header-section-number">4.2.8</span> 47. 機能動詞構文のマイニング</h3>
 <p>「サ変接続名詞 + を -&gt; 動詞」という表現でなく、サ変接続名詞が含まれる文節すべてについてマイニングします。</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="係り受け解析.html#cb100-1"></a>memo &lt;-<span class="st"> </span>res <span class="op">%&gt;%</span></span>
-<span id="cb100-2"><a href="係り受け解析.html#cb100-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx) <span class="op">%&gt;%</span></span>
-<span id="cb100-3"><a href="係り受け解析.html#cb100-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(</span>
-<span id="cb100-4"><a href="係り受け解析.html#cb100-4"></a>    <span class="dt">chunk =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb100-5"><a href="係り受け解析.html#cb100-5"></a>      word,</span>
-<span id="cb100-6"><a href="係り受け解析.html#cb100-6"></a>      <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb100-7"><a href="係り受け解析.html#cb100-7"></a>    )</span>
-<span id="cb100-8"><a href="係り受け解析.html#cb100-8"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb100-9"><a href="係り受け解析.html#cb100-9"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb100-10"><a href="係り受け解析.html#cb100-10"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(sentence_idx, chunk_idx, D1, D2, POS1, POS2, Original, chunk)</span>
-<span id="cb100-11"><a href="係り受け解析.html#cb100-11"></a></span>
-<span id="cb100-12"><a href="係り受け解析.html#cb100-12"></a>pattern &lt;-<span class="st"> </span>memo <span class="op">%&gt;%</span></span>
-<span id="cb100-13"><a href="係り受け解析.html#cb100-13"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POS2 <span class="op">==</span><span class="st"> &quot;サ変接続&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb100-14"><a href="係り受け解析.html#cb100-14"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx) <span class="op">%&gt;%</span></span>
-<span id="cb100-15"><a href="係り受け解析.html#cb100-15"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">surface_form =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb100-16"><a href="係り受け解析.html#cb100-16"></a>    chunk,</span>
-<span id="cb100-17"><a href="係り受け解析.html#cb100-17"></a>    <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb100-18"><a href="係り受け解析.html#cb100-18"></a>  )) <span class="op">%&gt;%</span></span>
-<span id="cb100-19"><a href="係り受け解析.html#cb100-19"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb100-20"><a href="係り受け解析.html#cb100-20"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx, D1) <span class="op">%&gt;%</span></span>
-<span id="cb100-21"><a href="係り受け解析.html#cb100-21"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_map</span>(<span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span></span>
-<span id="cb100-22"><a href="係り受け解析.html#cb100-22"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">collocation =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb100-23"><a href="係り受け解析.html#cb100-23"></a>      <span class="st">&quot;&quot;</span>,</span>
-<span id="cb100-24"><a href="係り受け解析.html#cb100-24"></a>      memo<span class="op">$</span>Original[memo<span class="op">$</span>sentence_idx <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>sentence_idx <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>D2 <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>D1 <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>POS1 <span class="op">==</span><span class="st"> &quot;助詞&quot;</span>],</span>
-<span id="cb100-25"><a href="係り受け解析.html#cb100-25"></a>      <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb100-26"><a href="係り受け解析.html#cb100-26"></a>    )) <span class="op">%&gt;%</span></span>
-<span id="cb100-27"><a href="係り受け解析.html#cb100-27"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">chunk =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb100-28"><a href="係り受け解析.html#cb100-28"></a>      <span class="st">&quot;&quot;</span>,</span>
-<span id="cb100-29"><a href="係り受け解析.html#cb100-29"></a>      memo<span class="op">$</span>chunk[memo<span class="op">$</span>sentence_idx <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>sentence_idx <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>D2 <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>D1 <span class="op">&amp;</span><span class="st"> </span>memo<span class="op">$</span>POS1 <span class="op">==</span><span class="st"> &quot;助詞&quot;</span>],</span>
-<span id="cb100-30"><a href="係り受け解析.html#cb100-30"></a>      <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb100-31"><a href="係り受け解析.html#cb100-31"></a>    ))) <span class="op">%&gt;%</span></span>
-<span id="cb100-32"><a href="係り受け解析.html#cb100-32"></a><span class="st">  </span>purrr<span class="op">::</span><span class="kw">map_dfr</span>(<span class="op">~</span>.) <span class="op">%&gt;%</span></span>
-<span id="cb100-33"><a href="係り受け解析.html#cb100-33"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(surface_form, collocation, chunk)</span>
-<span id="cb100-34"><a href="係り受け解析.html#cb100-34"></a></span>
-<span id="cb100-35"><a href="係り受け解析.html#cb100-35"></a>pattern</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 187 x 3
-#&gt;    surface_form         collocation     chunk                                       
-#&gt;    &lt;chr&gt;                &lt;chr&gt;           &lt;chr&gt;                                       
-#&gt;  1 位置関係まで位置関係まで~ &quot;の&quot;            &quot;要素間の&quot;                                  
-#&gt;  2 位置関係まで位置関係まで~ &quot;の&quot;            &quot;要素間の&quot;                                  
-#&gt;  3 学習できる           &quot;に は により て&quot;~ &quot;月には 月には ジェフリー・ヒントンにより 含めて&quot;~
-#&gt;  4 提唱された。         &quot;が&quot;            &quot;カプセルネットワークが&quot;                    
-#&gt;  5 「存在」や           &quot;&quot;              &quot;&quot;                                          
-#&gt;  6 信用していなかった。 &quot;と て は を&quot;   &quot;語ろうとしてきた。 語ろうとしてきた。 理論物理学者は、 哲学者を&quot;~
-#&gt;  7 理解していない。     &quot;どころか さえ&quot; &quot;量子力学どころか、 概念さえ&quot;               
-#&gt;  8 意思疎通を意思疎通を &quot;&quot;              &quot;&quot;                                          
-#&gt;  9 意思疎通を意思疎通を &quot;&quot;              &quot;&quot;                                          
-#&gt; 10 プログラミング言語による~ &quot;&quot;              &quot;&quot;                                          
-#&gt; # ... with 177 more rows</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="係り受け解析.html#cb100-1" aria-hidden="true" tabindex="-1"></a>memo <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span></span>
+<span id="cb100-2"><a href="係り受け解析.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx) <span class="sc">%&gt;%</span></span>
+<span id="cb100-3"><a href="係り受け解析.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb100-4"><a href="係り受け解析.html#cb100-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">chunk =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb100-5"><a href="係り受け解析.html#cb100-5" aria-hidden="true" tabindex="-1"></a>      word,</span>
+<span id="cb100-6"><a href="係り受け解析.html#cb100-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb100-7"><a href="係り受け解析.html#cb100-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb100-8"><a href="係り受け解析.html#cb100-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb100-9"><a href="係り受け解析.html#cb100-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb100-10"><a href="係り受け解析.html#cb100-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sentence_idx, chunk_idx, D1, D2, POS1, POS2, Original, chunk)</span>
+<span id="cb100-11"><a href="係り受け解析.html#cb100-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-12"><a href="係り受け解析.html#cb100-12" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> memo <span class="sc">%&gt;%</span></span>
+<span id="cb100-13"><a href="係り受け解析.html#cb100-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(POS2 <span class="sc">==</span> <span class="st">&quot;サ変接続&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb100-14"><a href="係り受け解析.html#cb100-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx) <span class="sc">%&gt;%</span></span>
+<span id="cb100-15"><a href="係り受け解析.html#cb100-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">surface_form =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb100-16"><a href="係り受け解析.html#cb100-16" aria-hidden="true" tabindex="-1"></a>    chunk,</span>
+<span id="cb100-17"><a href="係り受け解析.html#cb100-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">collapse =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb100-18"><a href="係り受け解析.html#cb100-18" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb100-19"><a href="係り受け解析.html#cb100-19" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb100-20"><a href="係り受け解析.html#cb100-20" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx, D1) <span class="sc">%&gt;%</span></span>
+<span id="cb100-21"><a href="係り受け解析.html#cb100-21" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_map</span>(<span class="sc">~</span> .x <span class="sc">%&gt;%</span></span>
+<span id="cb100-22"><a href="係り受け解析.html#cb100-22" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">collocation =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb100-23"><a href="係り受け解析.html#cb100-23" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;&quot;</span>,</span>
+<span id="cb100-24"><a href="係り受け解析.html#cb100-24" aria-hidden="true" tabindex="-1"></a>      memo<span class="sc">$</span>Original[memo<span class="sc">$</span>sentence_idx <span class="sc">==</span> .y<span class="sc">$</span>sentence_idx <span class="sc">&amp;</span> memo<span class="sc">$</span>D2 <span class="sc">==</span> .y<span class="sc">$</span>D1 <span class="sc">&amp;</span> memo<span class="sc">$</span>POS1 <span class="sc">==</span> <span class="st">&quot;助詞&quot;</span>],</span>
+<span id="cb100-25"><a href="係り受け解析.html#cb100-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb100-26"><a href="係り受け解析.html#cb100-26" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">%&gt;%</span></span>
+<span id="cb100-27"><a href="係り受け解析.html#cb100-27" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">chunk =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb100-28"><a href="係り受け解析.html#cb100-28" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;&quot;</span>,</span>
+<span id="cb100-29"><a href="係り受け解析.html#cb100-29" aria-hidden="true" tabindex="-1"></a>      memo<span class="sc">$</span>chunk[memo<span class="sc">$</span>sentence_idx <span class="sc">==</span> .y<span class="sc">$</span>sentence_idx <span class="sc">&amp;</span> memo<span class="sc">$</span>D2 <span class="sc">==</span> .y<span class="sc">$</span>D1 <span class="sc">&amp;</span> memo<span class="sc">$</span>POS1 <span class="sc">==</span> <span class="st">&quot;助詞&quot;</span>],</span>
+<span id="cb100-30"><a href="係り受け解析.html#cb100-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb100-31"><a href="係り受け解析.html#cb100-31" aria-hidden="true" tabindex="-1"></a>    ))) <span class="sc">%&gt;%</span></span>
+<span id="cb100-32"><a href="係り受け解析.html#cb100-32" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map_dfr</span>(<span class="sc">~</span>.) <span class="sc">%&gt;%</span></span>
+<span id="cb100-33"><a href="係り受け解析.html#cb100-33" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(surface_form, collocation, chunk)</span>
+<span id="cb100-34"><a href="係り受け解析.html#cb100-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-35"><a href="係り受け解析.html#cb100-35" aria-hidden="true" tabindex="-1"></a>pattern</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 171 x 3
+#&gt;    surface_form           collocation     chunk                                    
+#&gt;    &lt;chr&gt;                  &lt;chr&gt;           &lt;chr&gt;                                    
+#&gt;  1 開発支援に開発支援に   &quot;の&quot;            &quot;分野の&quot;                                 
+#&gt;  2 開発支援に開発支援に   &quot;の&quot;            &quot;分野の&quot;                                 
+#&gt;  3 支出すると             &quot;で を&quot;         &quot;年で （約億円）を&quot;                      
+#&gt;  4 宣言し、               &quot;と&quot;            &quot;支出すると&quot;                             
+#&gt;  5 招致した。             &quot;は など を&quot;    &quot;フランス大統領は 富士通などを 富士通などを&quot;~
+#&gt;  6 研究における           &quot;&quot;              &quot;&quot;                                       
+#&gt;  7 連携も                 &quot;とも における&quot; &quot;イギリスとも 研究における&quot;              
+#&gt;  8 決定されている。       &quot;も&quot;            &quot;連携も&quot;                                 
+#&gt;  9 発明と、               &quot;の&quot;            &quot;の&quot;                                     
+#&gt; 10 ビッグデータ収集環境の &quot;の&quot;            &quot;年以降の&quot;                               
+#&gt; # ... with 161 more rows</code></pre>
 </div>
 <div id="名詞から根へのパスの抽出" class="section level3" number="4.2.9">
 <h3><span class="header-section-number">4.2.9</span> 48. 名詞から根へのパスの抽出</h3>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="係り受け解析.html#cb102-1"></a>memo &lt;-<span class="st"> </span>res <span class="op">%&gt;%</span></span>
-<span id="cb102-2"><a href="係り受け解析.html#cb102-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate_at</span>(<span class="kw">c</span>(<span class="st">&quot;D1&quot;</span>, <span class="st">&quot;D2&quot;</span>), as.integer) <span class="op">%&gt;%</span></span>
-<span id="cb102-3"><a href="係り受け解析.html#cb102-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx) <span class="op">%&gt;%</span></span>
-<span id="cb102-4"><a href="係り受け解析.html#cb102-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(</span>
-<span id="cb102-5"><a href="係り受け解析.html#cb102-5"></a>    <span class="dt">chunk =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb102-6"><a href="係り受け解析.html#cb102-6"></a>      word,</span>
-<span id="cb102-7"><a href="係り受け解析.html#cb102-7"></a>      <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb102-8"><a href="係り受け解析.html#cb102-8"></a>    )</span>
-<span id="cb102-9"><a href="係り受け解析.html#cb102-9"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb102-10"><a href="係り受け解析.html#cb102-10"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb102-11"><a href="係り受け解析.html#cb102-11"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(sentence_idx, chunk_idx, D1, D2, POS1, Original, chunk) <span class="op">%&gt;%</span></span>
-<span id="cb102-12"><a href="係り受け解析.html#cb102-12"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">distinct</span>(chunk, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb102-13"><a href="係り受け解析.html#cb102-13"></a></span>
-<span id="cb102-14"><a href="係り受け解析.html#cb102-14"></a>pattern &lt;-<span class="st"> </span>memo <span class="op">%&gt;%</span></span>
-<span id="cb102-15"><a href="係り受け解析.html#cb102-15"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POS1 <span class="op">==</span><span class="st"> &quot;名詞&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb102-16"><a href="係り受け解析.html#cb102-16"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(sentence_idx, chunk_idx) <span class="op">%&gt;%</span></span>
-<span id="cb102-17"><a href="係り受け解析.html#cb102-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_map</span>(<span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span></span>
-<span id="cb102-18"><a href="係り受け解析.html#cb102-18"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">path =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb102-19"><a href="係り受け解析.html#cb102-19"></a>      memo<span class="op">$</span>chunk[</span>
-<span id="cb102-20"><a href="係り受け解析.html#cb102-20"></a>        memo<span class="op">$</span>sentence_idx <span class="op">==</span><span class="st"> </span>.y<span class="op">$</span>sentence_idx <span class="op">&amp;</span></span>
-<span id="cb102-21"><a href="係り受け解析.html#cb102-21"></a><span class="st">          </span>memo<span class="op">$</span>chunk_idx <span class="op">&gt;=</span><span class="st"> </span>.y<span class="op">$</span>chunk_idx <span class="op">&amp;</span></span>
-<span id="cb102-22"><a href="係り受け解析.html#cb102-22"></a><span class="st">          </span>(memo<span class="op">$</span>D2 <span class="op">&gt;</span><span class="st"> </span>.x<span class="op">$</span>D1 <span class="op">||</span><span class="st"> </span>memo<span class="op">$</span>D2 <span class="op">==</span><span class="st"> </span><span class="op">-</span>1L)</span>
-<span id="cb102-23"><a href="係り受け解析.html#cb102-23"></a>      ],</span>
-<span id="cb102-24"><a href="係り受け解析.html#cb102-24"></a>      <span class="dt">collapse =</span> <span class="st">&quot; -&gt; &quot;</span></span>
-<span id="cb102-25"><a href="係り受け解析.html#cb102-25"></a>    ))) <span class="op">%&gt;%</span></span>
-<span id="cb102-26"><a href="係り受け解析.html#cb102-26"></a><span class="st">  </span>purrr<span class="op">::</span><span class="kw">map_dfr</span>(<span class="op">~</span>.)</span>
-<span id="cb102-27"><a href="係り受け解析.html#cb102-27"></a></span>
-<span id="cb102-28"><a href="係り受け解析.html#cb102-28"></a>pattern <span class="op">%&gt;%</span></span>
-<span id="cb102-29"><a href="係り受け解析.html#cb102-29"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(path) <span class="op">%&gt;%</span></span>
-<span id="cb102-30"><a href="係り受け解析.html#cb102-30"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(path <span class="op">!=</span><span class="st"> &quot;&quot;</span>)</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 10 x 1
-#&gt;    path                                                                             
-#&gt;    &lt;chr&gt;                                                                            
-#&gt;  1 年 -&gt; 月には -&gt; ジェフリー・ヒントンにより -&gt; 要素間の -&gt; 相対的な -&gt; 位置関係まで -&gt; 含めて -&gt; 学習できる -&gt; カプセルネットワー~
-#&gt;  2 哲学者は、 -&gt; 科学とは -&gt; 違う -&gt; 日常的言語で -&gt; 「存在」や -&gt; 「宇宙」を -&gt; 語ろうとしてきた。 -&gt; しかし -&gt; 理論物理学者は、 ~
-#&gt;  3 プログラミング言語による -&gt; 「」という -&gt; カウンセラーを -&gt; 模倣した -&gt; プログラム -&gt; （人工無脳）が -&gt; しばしば -&gt; 引き合いに -&gt;~
-#&gt;  4 以降、 -&gt; 計算機の -&gt; 能力限界から -&gt; 理論の -&gt; 改善は -&gt; 遅々として -&gt; 進まず、 -&gt; 目立った -&gt; 進展は -&gt; 無くなり、 -&gt; ~
-#&gt;  5 ロシアと -&gt; 中国は -&gt; 既に -&gt; 実用化してると -&gt; される -&gt; ハッキングの -&gt; 自動化の -&gt; 他、 -&gt; 特定の -&gt; 個人を -&gt; 攻撃し~
-#&gt;  6 世紀 -&gt; 初め、 -&gt; 動物の -&gt; 身体が -&gt; ただの -&gt; 複雑な -&gt; 機械であると -&gt; 提唱した -&gt; （機械論）。 -&gt; 年、 -&gt; 最初の -~
-#&gt;  7 年に -&gt; 英国エコノミスト誌で -&gt; 「ビッグデータ」という -&gt; 用語が -&gt; 同年に -&gt; 質問応答システムの -&gt; ワトソンが、 -&gt; クイズ番組 -&gt;~
-#&gt;  8 須藤は、 -&gt; 哲学的に -&gt; 論じられている -&gt; 「原因」という -&gt; 言葉を -&gt; 取り上げて、 -&gt; 「原因という -&gt; 具体的に -&gt; 定義しない -~
-#&gt;  9 相愛大学人文学部教授の -&gt; 釈徹宗は -&gt; 「哲学や -&gt; 思想や -&gt; 文学と、 -&gt; 宗教や -&gt; 霊性論との -&gt; 線引きも -&gt; 不明瞭になってきてい~
-#&gt; 10 ジェフ・が、 -&gt; 実現に -&gt; 向けて -&gt; 続けているが、 -&gt; 著書 -&gt; 『考える -&gt; 脳考える -&gt; コンピューター』の -&gt; 中で -&gt; 自己連想~</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="係り受け解析.html#cb102-1" aria-hidden="true" tabindex="-1"></a>memo <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span></span>
+<span id="cb102-2"><a href="係り受け解析.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate_at</span>(<span class="fu">c</span>(<span class="st">&quot;D1&quot;</span>, <span class="st">&quot;D2&quot;</span>), as.integer) <span class="sc">%&gt;%</span></span>
+<span id="cb102-3"><a href="係り受け解析.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx) <span class="sc">%&gt;%</span></span>
+<span id="cb102-4"><a href="係り受け解析.html#cb102-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb102-5"><a href="係り受け解析.html#cb102-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">chunk =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb102-6"><a href="係り受け解析.html#cb102-6" aria-hidden="true" tabindex="-1"></a>      word,</span>
+<span id="cb102-7"><a href="係り受け解析.html#cb102-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb102-8"><a href="係り受け解析.html#cb102-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb102-9"><a href="係り受け解析.html#cb102-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb102-10"><a href="係り受け解析.html#cb102-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb102-11"><a href="係り受け解析.html#cb102-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sentence_idx, chunk_idx, D1, D2, POS1, Original, chunk) <span class="sc">%&gt;%</span></span>
+<span id="cb102-12"><a href="係り受け解析.html#cb102-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(chunk, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb102-13"><a href="係り受け解析.html#cb102-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-14"><a href="係り受け解析.html#cb102-14" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> memo <span class="sc">%&gt;%</span></span>
+<span id="cb102-15"><a href="係り受け解析.html#cb102-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(POS1 <span class="sc">==</span> <span class="st">&quot;名詞&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb102-16"><a href="係り受け解析.html#cb102-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(sentence_idx, chunk_idx) <span class="sc">%&gt;%</span></span>
+<span id="cb102-17"><a href="係り受け解析.html#cb102-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_map</span>(<span class="sc">~</span> .x <span class="sc">%&gt;%</span></span>
+<span id="cb102-18"><a href="係り受け解析.html#cb102-18" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">path =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb102-19"><a href="係り受け解析.html#cb102-19" aria-hidden="true" tabindex="-1"></a>      memo<span class="sc">$</span>chunk[</span>
+<span id="cb102-20"><a href="係り受け解析.html#cb102-20" aria-hidden="true" tabindex="-1"></a>        memo<span class="sc">$</span>sentence_idx <span class="sc">==</span> .y<span class="sc">$</span>sentence_idx <span class="sc">&amp;</span></span>
+<span id="cb102-21"><a href="係り受け解析.html#cb102-21" aria-hidden="true" tabindex="-1"></a>          memo<span class="sc">$</span>chunk_idx <span class="sc">&gt;=</span> .y<span class="sc">$</span>chunk_idx <span class="sc">&amp;</span></span>
+<span id="cb102-22"><a href="係り受け解析.html#cb102-22" aria-hidden="true" tabindex="-1"></a>          (memo<span class="sc">$</span>D2 <span class="sc">&gt;</span> .x<span class="sc">$</span>D1 <span class="sc">||</span> memo<span class="sc">$</span>D2 <span class="sc">==</span> <span class="sc">-</span>1L)</span>
+<span id="cb102-23"><a href="係り受け解析.html#cb102-23" aria-hidden="true" tabindex="-1"></a>      ],</span>
+<span id="cb102-24"><a href="係り受け解析.html#cb102-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">collapse =</span> <span class="st">&quot; -&gt; &quot;</span></span>
+<span id="cb102-25"><a href="係り受け解析.html#cb102-25" aria-hidden="true" tabindex="-1"></a>    ))) <span class="sc">%&gt;%</span></span>
+<span id="cb102-26"><a href="係り受け解析.html#cb102-26" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map_dfr</span>(<span class="sc">~</span>.)</span>
+<span id="cb102-27"><a href="係り受け解析.html#cb102-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-28"><a href="係り受け解析.html#cb102-28" aria-hidden="true" tabindex="-1"></a>pattern <span class="sc">%&gt;%</span></span>
+<span id="cb102-29"><a href="係り受け解析.html#cb102-29" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(path) <span class="sc">%&gt;%</span></span>
+<span id="cb102-30"><a href="係り受け解析.html#cb102-30" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(path <span class="sc">!=</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<pre><code>#&gt; # A tibble: 183 x 1
+#&gt;    path                                                                            
+#&gt;    &lt;chr&gt;                                                                           
+#&gt;  1 フランス大統領は -&gt; 分野の -&gt; 開発支援に -&gt; 向け -&gt; 年で -&gt; 億ドル -&gt; （約億円）を -&gt; 支出すると -&gt; 宣言し、 -&gt; 研究所を ~
+#&gt;  2 分野の -&gt; 開発支援に -&gt; 向け -&gt; 年で -&gt; 億ドル -&gt; （約億円）を -&gt; 支出すると -&gt; 宣言し、 -&gt; 研究所を -&gt; パリに -&gt; 開き~
+#&gt;  3 開発支援に -&gt; 向け -&gt; 年で -&gt; 億ドル -&gt; （約億円）を -&gt; 支出すると -&gt; 宣言し、 -&gt; 研究所を -&gt; パリに -&gt; 開き、 -&gt; フェ~
+#&gt;  4 年で -&gt; 億ドル -&gt; （約億円）を -&gt; 支出すると -&gt; 宣言し、 -&gt; 研究所を -&gt; パリに -&gt; 開き、 -&gt; フェイスブック、 -&gt; 、 -&gt; ~
+#&gt;  5 億ドル -&gt; （約億円）を -&gt; 支出すると -&gt; 宣言し、 -&gt; 研究所を -&gt; パリに -&gt; 開き、 -&gt; フェイスブック、 -&gt; 、 -&gt; 富士通などを~
+#&gt;  6 支出すると -&gt; 宣言し、 -&gt; 研究所を -&gt; パリに -&gt; 開き、 -&gt; フェイスブック、 -&gt; 、 -&gt; 富士通などを -&gt; 招致した。 -&gt; イギリス~
+#&gt;  7 宣言し、 -&gt; 研究所を -&gt; パリに -&gt; 開き、 -&gt; フェイスブック、 -&gt; 、 -&gt; 富士通などを -&gt; 招致した。 -&gt; イギリスとも -&gt; 研究に~
+#&gt;  8 研究所を -&gt; パリに -&gt; 開き、 -&gt; フェイスブック、 -&gt; 、 -&gt; 富士通などを -&gt; 招致した。 -&gt; イギリスとも -&gt; 研究における -&gt; 長~
+#&gt;  9 パリに -&gt; 開き、 -&gt; フェイスブック、 -&gt; 、 -&gt; 富士通などを -&gt; 招致した。 -&gt; イギリスとも -&gt; 研究における -&gt; 長期的な -&gt; 連~
+#&gt; 10 フェイスブック、 -&gt; 、 -&gt; 富士通などを -&gt; 招致した。 -&gt; イギリスとも -&gt; 研究における -&gt; 長期的な -&gt; 連携も -&gt; 決定されている。~
+#&gt; # ... with 173 more rows</code></pre>
 </div>
 <div id="名詞間の係り受けパスの抽出" class="section level3" number="4.2.10">
 <h3><span class="header-section-number">4.2.10</span> 49. 名詞間の係り受けパスの抽出</h3>

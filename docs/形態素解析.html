@@ -5,26 +5,26 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 形態素解析 | Rで言語処理100本ノックを解くわけがない</title>
-  <meta name="description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta name="description" content="Rで言語処理100本ノック 2020に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 形態素解析 | Rで言語処理100本ノックを解くわけがない" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://paithiov909.github.io/nlp100-knocks-r" />
-  <meta property="og:image" content="https://paithiov909.github.io/nlp100-knocks-rimages/coverimage.jpg" />
-  <meta property="og:description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta property="og:image" content="https://paithiov909.github.io/nlp100-knocks-r/images/coverimage.jpg" />
+  <meta property="og:description" content="Rで言語処理100本ノック 2020に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
   <meta name="github-repo" content="paithiov909/nlp100-knocks-r" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 3 形態素解析 | Rで言語処理100本ノックを解くわけがない" />
   
-  <meta name="twitter:description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
-  <meta name="twitter:image" content="https://paithiov909.github.io/nlp100-knocks-rimages/coverimage.jpg" />
+  <meta name="twitter:description" content="Rで言語処理100本ノック 2020に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta name="twitter:image" content="https://paithiov909.github.io/nlp100-knocks-r/images/coverimage.jpg" />
 
 <meta name="author" content="Kato Akiru" />
 
 
-<meta name="date" content="2021-01-16" />
+<meta name="date" content="2021-01-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -237,12 +236,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="データの読み込み" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> データの読み込み</h2>
 <p>readtextで読みこんでおきます。</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="形態素解析.html#cb65-1"></a>temp &lt;-<span class="st"> </span><span class="kw">tempfile</span>(<span class="dt">fileext =</span> <span class="st">&quot;.txt&quot;</span>)</span>
-<span id="cb65-2"><a href="形態素解析.html#cb65-2"></a><span class="kw">download.file</span>(<span class="st">&quot;https://nlp100.github.io/data/neko.txt&quot;</span>, temp)</span>
-<span id="cb65-3"><a href="形態素解析.html#cb65-3"></a>neko &lt;-<span class="st"> </span>readtext<span class="op">::</span><span class="kw">readtext</span>(temp, <span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb65-4"><a href="形態素解析.html#cb65-4"></a>neko<span class="op">$</span>text[<span class="dv">1</span>] <span class="op">%&gt;%</span></span>
-<span id="cb65-5"><a href="形態素解析.html#cb65-5"></a><span class="st">  </span>readr<span class="op">::</span><span class="kw">read_lines</span>(<span class="dt">skip_empty_rows =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb65-6"><a href="形態素解析.html#cb65-6"></a><span class="st">  </span><span class="kw">length</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="形態素解析.html#cb65-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.txt&quot;</span>)</span>
+<span id="cb65-2"><a href="形態素解析.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://nlp100.github.io/data/neko.txt&quot;</span>, temp)</span>
+<span id="cb65-3"><a href="形態素解析.html#cb65-3" aria-hidden="true" tabindex="-1"></a>neko <span class="ot">&lt;-</span> readtext<span class="sc">::</span><span class="fu">readtext</span>(temp, <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb65-4"><a href="形態素解析.html#cb65-4" aria-hidden="true" tabindex="-1"></a>neko<span class="sc">$</span>text[<span class="dv">1</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb65-5"><a href="形態素解析.html#cb65-5" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_lines</span>(<span class="at">skip_empty_rows =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb65-6"><a href="形態素解析.html#cb65-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>()</span></code></pre></div>
 <pre><code>#&gt; [1] 9210</code></pre>
 </div>
 <div id="形態素解析-1" class="section level2" number="3.2">
@@ -251,13 +250,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.2.1</span> 30. 形態素解析結果の読み込み</h3>
 <p>RMeCabは必要な情報を取りづらいので、<a href="https://paithiov909.github.io/rcppkagome/">paithiov909/RcppKagome</a>を使います。RcppMeCabでもできますが、公式のリポジトリのソースはWindows環境だとビルドにコケるのでUNIX系の環境が必要です（2021年1月現在）。</p>
 <p>すべて解析すると時間がかかるのでここでは一部だけ使います。</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="形態素解析.html#cb67-1"></a>neko_txt_mecab &lt;-<span class="st"> </span>neko <span class="op">%&gt;%</span></span>
-<span id="cb67-2"><a href="形態素解析.html#cb67-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>) <span class="op">%&gt;%</span></span>
-<span id="cb67-3"><a href="形態素解析.html#cb67-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">pull</span>(<span class="st">&quot;text&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb67-4"><a href="形態素解析.html#cb67-4"></a><span class="st">  </span>RcppKagome<span class="op">::</span><span class="kw">kagome</span>() <span class="op">%&gt;%</span></span>
-<span id="cb67-5"><a href="形態素解析.html#cb67-5"></a><span class="st">  </span>RcppKagome<span class="op">::</span><span class="kw">prettify</span>()</span>
-<span id="cb67-6"><a href="形態素解析.html#cb67-6"></a></span>
-<span id="cb67-7"><a href="形態素解析.html#cb67-7"></a><span class="kw">head</span>(neko_txt_mecab)</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="形態素解析.html#cb67-1" aria-hidden="true" tabindex="-1"></a>neko_txt_mecab <span class="ot">&lt;-</span> neko <span class="sc">%&gt;%</span></span>
+<span id="cb67-2"><a href="形態素解析.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="形態素解析.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(<span class="st">&quot;text&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-4"><a href="形態素解析.html#cb67-4" aria-hidden="true" tabindex="-1"></a>  RcppKagome<span class="sc">::</span><span class="fu">kagome</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb67-5"><a href="形態素解析.html#cb67-5" aria-hidden="true" tabindex="-1"></a>  RcppKagome<span class="sc">::</span><span class="fu">prettify</span>()</span>
+<span id="cb67-6"><a href="形態素解析.html#cb67-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-7"><a href="形態素解析.html#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(neko_txt_mecab)</span></code></pre></div>
 <pre><code>#&gt;   Sid Surface POS1   POS2 POS3 POS4 X5StageUse1 X5StageUse2 Original    Yomi1
 #&gt; 1   1      一 名詞     数 &lt;NA&gt; &lt;NA&gt;        &lt;NA&gt;        &lt;NA&gt;       一     イチ
 #&gt; 2   1    \n\n 記号   空白 &lt;NA&gt; &lt;NA&gt;        &lt;NA&gt;        &lt;NA&gt;     &lt;NA&gt;     &lt;NA&gt;
@@ -275,10 +274,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="動詞" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> 31. 動詞</h3>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="形態素解析.html#cb69-1"></a>neko_txt_mecab <span class="op">%&gt;%</span></span>
-<span id="cb69-2"><a href="形態素解析.html#cb69-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POS1 <span class="op">==</span><span class="st"> &quot;動詞&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb69-3"><a href="形態素解析.html#cb69-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Surface) <span class="op">%&gt;%</span></span>
-<span id="cb69-4"><a href="形態素解析.html#cb69-4"></a><span class="st">  </span><span class="kw">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="形態素解析.html#cb69-1" aria-hidden="true" tabindex="-1"></a>neko_txt_mecab <span class="sc">%&gt;%</span></span>
+<span id="cb69-2"><a href="形態素解析.html#cb69-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(POS1 <span class="sc">==</span> <span class="st">&quot;動詞&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb69-3"><a href="形態素解析.html#cb69-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Surface) <span class="sc">%&gt;%</span></span>
+<span id="cb69-4"><a href="形態素解析.html#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>#&gt;   Surface
 #&gt; 1    生れ
 #&gt; 2    つか
@@ -289,10 +288,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="動詞の原形" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> 32. 動詞の原形</h3>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="形態素解析.html#cb71-1"></a>neko_txt_mecab <span class="op">%&gt;%</span></span>
-<span id="cb71-2"><a href="形態素解析.html#cb71-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POS1 <span class="op">==</span><span class="st"> &quot;動詞&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb71-3"><a href="形態素解析.html#cb71-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Original) <span class="op">%&gt;%</span></span>
-<span id="cb71-4"><a href="形態素解析.html#cb71-4"></a><span class="st">  </span><span class="kw">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="形態素解析.html#cb71-1" aria-hidden="true" tabindex="-1"></a>neko_txt_mecab <span class="sc">%&gt;%</span></span>
+<span id="cb71-2"><a href="形態素解析.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(POS1 <span class="sc">==</span> <span class="st">&quot;動詞&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb71-3"><a href="形態素解析.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Original) <span class="sc">%&gt;%</span></span>
+<span id="cb71-4"><a href="形態素解析.html#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>#&gt;   Original
 #&gt; 1   生れる
 #&gt; 2     つく
@@ -303,18 +302,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="aのb" class="section level3" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> 33. 「AのB」</h3>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="形態素解析.html#cb73-1"></a>neko_txt_mecab <span class="op">%&gt;%</span></span>
-<span id="cb73-2"><a href="形態素解析.html#cb73-2"></a><span class="st">  </span>tibble<span class="op">::</span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span></span>
-<span id="cb73-3"><a href="形態素解析.html#cb73-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Surface <span class="op">==</span><span class="st"> &quot;の&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb73-4"><a href="形態素解析.html#cb73-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">pull</span>(rowid) <span class="op">%&gt;%</span></span>
-<span id="cb73-5"><a href="形態素解析.html#cb73-5"></a><span class="st">  </span>purrr<span class="op">::</span><span class="kw">keep</span>(<span class="op">~</span><span class="st"> </span>neko_txt_mecab<span class="op">$</span>POS1[. <span class="op">-</span><span class="st"> </span><span class="dv">1</span>] <span class="op">==</span><span class="st"> &quot;名詞&quot;</span> <span class="op">&amp;&amp;</span><span class="st"> </span>neko_txt_mecab<span class="op">$</span>POS1[. <span class="op">+</span><span class="st"> </span><span class="dv">1</span>] <span class="op">==</span><span class="st"> &quot;名詞&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb73-6"><a href="形態素解析.html#cb73-6"></a><span class="st">  </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(<span class="op">~</span><span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_c</span>(</span>
-<span id="cb73-7"><a href="形態素解析.html#cb73-7"></a>    neko_txt_mecab<span class="op">$</span>Surface[. <span class="op">-</span><span class="st"> </span><span class="dv">1</span>],</span>
-<span id="cb73-8"><a href="形態素解析.html#cb73-8"></a>    neko_txt_mecab<span class="op">$</span>Surface[.],</span>
-<span id="cb73-9"><a href="形態素解析.html#cb73-9"></a>    neko_txt_mecab<span class="op">$</span>Surface[. <span class="op">+</span><span class="st"> </span><span class="dv">1</span>],</span>
-<span id="cb73-10"><a href="形態素解析.html#cb73-10"></a>    <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb73-11"><a href="形態素解析.html#cb73-11"></a>  )) <span class="op">%&gt;%</span></span>
-<span id="cb73-12"><a href="形態素解析.html#cb73-12"></a><span class="st">  </span><span class="kw">head</span>(30L)</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="形態素解析.html#cb73-1" aria-hidden="true" tabindex="-1"></a>neko_txt_mecab <span class="sc">%&gt;%</span></span>
+<span id="cb73-2"><a href="形態素解析.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rowid_to_column</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a href="形態素解析.html#cb73-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Surface <span class="sc">==</span> <span class="st">&quot;の&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb73-4"><a href="形態素解析.html#cb73-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(rowid) <span class="sc">%&gt;%</span></span>
+<span id="cb73-5"><a href="形態素解析.html#cb73-5" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">keep</span>(<span class="sc">~</span> neko_txt_mecab<span class="sc">$</span>POS1[. <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">==</span> <span class="st">&quot;名詞&quot;</span> <span class="sc">&amp;&amp;</span> neko_txt_mecab<span class="sc">$</span>POS1[. <span class="sc">+</span> <span class="dv">1</span>] <span class="sc">==</span> <span class="st">&quot;名詞&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb73-6"><a href="形態素解析.html#cb73-6" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map_chr</span>(<span class="sc">~</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(</span>
+<span id="cb73-7"><a href="形態素解析.html#cb73-7" aria-hidden="true" tabindex="-1"></a>    neko_txt_mecab<span class="sc">$</span>Surface[. <span class="sc">-</span> <span class="dv">1</span>],</span>
+<span id="cb73-8"><a href="形態素解析.html#cb73-8" aria-hidden="true" tabindex="-1"></a>    neko_txt_mecab<span class="sc">$</span>Surface[.],</span>
+<span id="cb73-9"><a href="形態素解析.html#cb73-9" aria-hidden="true" tabindex="-1"></a>    neko_txt_mecab<span class="sc">$</span>Surface[. <span class="sc">+</span> <span class="dv">1</span>],</span>
+<span id="cb73-10"><a href="形態素解析.html#cb73-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">collapse =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb73-11"><a href="形態素解析.html#cb73-11" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb73-12"><a href="形態素解析.html#cb73-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(30L)</span></code></pre></div>
 <pre><code>#&gt;  [1] &quot;彼の掌&quot;     &quot;掌の上&quot;     &quot;書生の顔&quot;   &quot;はずの顔&quot;   &quot;顔の真中&quot;   &quot;穴の中&quot;    
 #&gt;  [7] &quot;書生の掌&quot;   &quot;掌の裏&quot;     &quot;何の事&quot;     &quot;肝心の母親&quot; &quot;藁の上&quot;     &quot;笹原の中&quot;  
 #&gt; [13] &quot;池の前&quot;     &quot;池の上&quot;     &quot;一樹の蔭&quot;   &quot;垣根の穴&quot;   &quot;隣家の三&quot;   &quot;時の通路&quot;  
@@ -324,39 +323,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="名詞の連接" class="section level3" number="3.2.5">
 <h3><span class="header-section-number">3.2.5</span> 34. 名詞の連接</h3>
 <p>これよくわからない。探索する処理が重いので<code>dplyr::sample_frac</code>でサンプルを減らしています。</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="形態素解析.html#cb75-1"></a>idx &lt;-<span class="st"> </span>neko_txt_mecab <span class="op">%&gt;%</span></span>
-<span id="cb75-2"><a href="形態素解析.html#cb75-2"></a><span class="st">  </span>tibble<span class="op">::</span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span></span>
-<span id="cb75-3"><a href="形態素解析.html#cb75-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POS1 <span class="op">==</span><span class="st"> &quot;名詞&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb75-4"><a href="形態素解析.html#cb75-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">sample_frac</span>(<span class="fl">0.1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb75-5"><a href="形態素解析.html#cb75-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">pull</span>(rowid) <span class="op">%&gt;%</span></span>
-<span id="cb75-6"><a href="形態素解析.html#cb75-6"></a><span class="st">  </span>purrr<span class="op">::</span><span class="kw">discard</span>(<span class="op">~</span><span class="st"> </span>neko_txt_mecab<span class="op">$</span>POS1[. <span class="op">+</span><span class="st"> </span><span class="dv">1</span>] <span class="op">!=</span><span class="st"> &quot;名詞&quot;</span>)</span>
-<span id="cb75-7"><a href="形態素解析.html#cb75-7"></a></span>
-<span id="cb75-8"><a href="形態素解析.html#cb75-8"></a>search_in &lt;-<span class="st"> </span>idx</span>
-<span id="cb75-9"><a href="形態素解析.html#cb75-9"></a></span>
-<span id="cb75-10"><a href="形態素解析.html#cb75-10"></a>purrr<span class="op">::</span><span class="kw">map_chr</span>(search_in, <span class="cf">function</span>(idx) {</span>
-<span id="cb75-11"><a href="形態素解析.html#cb75-11"></a>  itr &lt;-<span class="st"> </span>idx</span>
-<span id="cb75-12"><a href="形態素解析.html#cb75-12"></a>  res &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_c</span>(neko_txt_mecab<span class="op">$</span>Surface[idx])</span>
-<span id="cb75-13"><a href="形態素解析.html#cb75-13"></a>  <span class="cf">while</span> (neko_txt_mecab<span class="op">$</span>POS1[itr <span class="op">+</span><span class="st"> </span><span class="dv">1</span>] <span class="op">==</span><span class="st"> &quot;名詞&quot;</span>) {</span>
-<span id="cb75-14"><a href="形態素解析.html#cb75-14"></a>    res &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_c</span>(res, neko_txt_mecab<span class="op">$</span>Surface[itr <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])</span>
-<span id="cb75-15"><a href="形態素解析.html#cb75-15"></a>    search_in &lt;&lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">discard</span>(search_in, <span class="op">~</span><span class="st"> </span>. <span class="op">==</span><span class="st"> </span>itr <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb75-16"><a href="形態素解析.html#cb75-16"></a>    itr &lt;-<span class="st"> </span>itr <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
-<span id="cb75-17"><a href="形態素解析.html#cb75-17"></a>    <span class="cf">next</span></span>
-<span id="cb75-18"><a href="形態素解析.html#cb75-18"></a>  }</span>
-<span id="cb75-19"><a href="形態素解析.html#cb75-19"></a>  <span class="kw">return</span>(res)</span>
-<span id="cb75-20"><a href="形態素解析.html#cb75-20"></a>}) <span class="op">%&gt;%</span></span>
-<span id="cb75-21"><a href="形態素解析.html#cb75-21"></a><span class="st">  </span><span class="kw">head</span>(30L)</span></code></pre></div>
-<pre><code>#&gt;  [1] &quot;普通の&quot;   &quot;時姉&quot;     &quot;油壺&quot;     &quot;主人自ら&quot; &quot;招魂社&quot;   &quot;安心さ&quot;   &quot;退屈そう&quot;
-#&gt;  [8] &quot;枚かけ&quot;   &quot;大変尊敬&quot; &quot;極楽主義&quot; &quot;三口半&quot;   &quot;寒月君&quot;   &quot;所謂通人&quot; &quot;一人&quot;    
-#&gt; [15] &quot;迷亭君&quot;   &quot;寒月君&quot;   &quot;石地蔵&quot;   &quot;先刻一&quot;   &quot;臥竜窟&quot;   &quot;台馳&quot;     &quot;種以外&quot;  
-#&gt; [22] &quot;先生方&quot;   &quot;ようす&quot;   &quot;年漬&quot;     &quot;自殺者&quot;   &quot;沙弥君&quot;   &quot;仙君&quot;     &quot;三冊&quot;    
-#&gt; [29] &quot;女さ&quot;     &quot;三女子&quot;</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="形態素解析.html#cb75-1" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> neko_txt_mecab <span class="sc">%&gt;%</span></span>
+<span id="cb75-2"><a href="形態素解析.html#cb75-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rowid_to_column</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb75-3"><a href="形態素解析.html#cb75-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(POS1 <span class="sc">==</span> <span class="st">&quot;名詞&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb75-4"><a href="形態素解析.html#cb75-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">sample_frac</span>(<span class="fl">0.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb75-5"><a href="形態素解析.html#cb75-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(rowid) <span class="sc">%&gt;%</span></span>
+<span id="cb75-6"><a href="形態素解析.html#cb75-6" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">discard</span>(<span class="sc">~</span> neko_txt_mecab<span class="sc">$</span>POS1[. <span class="sc">+</span> <span class="dv">1</span>] <span class="sc">!=</span> <span class="st">&quot;名詞&quot;</span>)</span>
+<span id="cb75-7"><a href="形態素解析.html#cb75-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-8"><a href="形態素解析.html#cb75-8" aria-hidden="true" tabindex="-1"></a>search_in <span class="ot">&lt;-</span> idx</span>
+<span id="cb75-9"><a href="形態素解析.html#cb75-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-10"><a href="形態素解析.html#cb75-10" aria-hidden="true" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">map_chr</span>(search_in, <span class="cf">function</span>(idx) {</span>
+<span id="cb75-11"><a href="形態素解析.html#cb75-11" aria-hidden="true" tabindex="-1"></a>  itr <span class="ot">&lt;-</span> idx</span>
+<span id="cb75-12"><a href="形態素解析.html#cb75-12" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(neko_txt_mecab<span class="sc">$</span>Surface[idx])</span>
+<span id="cb75-13"><a href="形態素解析.html#cb75-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (neko_txt_mecab<span class="sc">$</span>POS1[itr <span class="sc">+</span> <span class="dv">1</span>] <span class="sc">==</span> <span class="st">&quot;名詞&quot;</span>) {</span>
+<span id="cb75-14"><a href="形態素解析.html#cb75-14" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(res, neko_txt_mecab<span class="sc">$</span>Surface[itr <span class="sc">+</span> <span class="dv">1</span>])</span>
+<span id="cb75-15"><a href="形態素解析.html#cb75-15" aria-hidden="true" tabindex="-1"></a>    search_in <span class="ot">&lt;&lt;-</span> purrr<span class="sc">::</span><span class="fu">discard</span>(search_in, <span class="sc">~</span> . <span class="sc">==</span> itr <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb75-16"><a href="形態素解析.html#cb75-16" aria-hidden="true" tabindex="-1"></a>    itr <span class="ot">&lt;-</span> itr <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb75-17"><a href="形態素解析.html#cb75-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb75-18"><a href="形態素解析.html#cb75-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb75-19"><a href="形態素解析.html#cb75-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb75-20"><a href="形態素解析.html#cb75-20" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span></span>
+<span id="cb75-21"><a href="形態素解析.html#cb75-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(30L)</span></code></pre></div>
+<pre><code>#&gt;  [1] &quot;十四&quot;           &quot;十四五&quot;         &quot;通行上&quot;         &quot;雲館&quot;          
+#&gt;  [5] &quot;二三杯&quot;         &quot;五十銭&quot;         &quot;馬鹿竹&quot;         &quot;神経性胃弱&quot;    
+#&gt;  [9] &quot;先きの&quot;         &quot;存候間&quot;         &quot;一箱&quot;           &quot;東風君&quot;        
+#&gt; [13] &quot;者以外&quot;         &quot;猫雄猫&quot;         &quot;苦沙弥君&quot;       &quot;漢法&quot;          
+#&gt; [17] &quot;希臘人&quot;         &quot;上り立て&quot;       &quot;――あれ&quot;       &quot;水彩画&quot;        
+#&gt; [21] &quot;さんせんだって&quot; &quot;五六寸&quot;         &quot;沙弥氏&quot;         &quot;六十余字&quot;      
+#&gt; [25] &quot;人風&quot;           &quot;六十枚&quot;         &quot;一杯&quot;           &quot;利亜&quot;          
+#&gt; [29] &quot;亭先生&quot;         &quot;国語家&quot;</code></pre>
 </div>
 <div id="単語の出現頻度" class="section level3" number="3.2.6">
 <h3><span class="header-section-number">3.2.6</span> 35. 単語の出現頻度</h3>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="形態素解析.html#cb77-1"></a>neko_txt_mecab <span class="op">%&gt;%</span></span>
-<span id="cb77-2"><a href="形態素解析.html#cb77-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Original) <span class="op">%&gt;%</span></span>
-<span id="cb77-3"><a href="形態素解析.html#cb77-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>(Original, <span class="dt">sort =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb77-4"><a href="形態素解析.html#cb77-4"></a><span class="st">  </span><span class="kw">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="形態素解析.html#cb77-1" aria-hidden="true" tabindex="-1"></a>neko_txt_mecab <span class="sc">%&gt;%</span></span>
+<span id="cb77-2"><a href="形態素解析.html#cb77-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Original) <span class="sc">%&gt;%</span></span>
+<span id="cb77-3"><a href="形態素解析.html#cb77-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(Original, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb77-4"><a href="形態素解析.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>#&gt; # A tibble: 6 x 2
 #&gt; # Groups:   Original [6]
 #&gt;   Original     n
@@ -370,59 +372,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="頻度上位10語" class="section level3" number="3.2.7">
 <h3><span class="header-section-number">3.2.7</span> 36. 頻度上位10語</h3>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="形態素解析.html#cb79-1"></a>neko_txt_mecab <span class="op">%&gt;%</span></span>
-<span id="cb79-2"><a href="形態素解析.html#cb79-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Original) <span class="op">%&gt;%</span></span>
-<span id="cb79-3"><a href="形態素解析.html#cb79-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>(Original, <span class="dt">sort =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb79-4"><a href="形態素解析.html#cb79-4"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb79-5"><a href="形態素解析.html#cb79-5"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(Original, <span class="op">-</span>n), <span class="dt">y =</span> n)) <span class="op">+</span></span>
-<span id="cb79-6"><a href="形態素解析.html#cb79-6"></a><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></span>
-<span id="cb79-7"><a href="形態素解析.html#cb79-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Surface form&quot;</span>) <span class="op">+</span></span>
-<span id="cb79-8"><a href="形態素解析.html#cb79-8"></a><span class="st">  </span><span class="kw">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="形態素解析.html#cb79-1" aria-hidden="true" tabindex="-1"></a>neko_txt_mecab <span class="sc">%&gt;%</span></span>
+<span id="cb79-2"><a href="形態素解析.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Original) <span class="sc">%&gt;%</span></span>
+<span id="cb79-3"><a href="形態素解析.html#cb79-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(Original, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb79-4"><a href="形態素解析.html#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb79-5"><a href="形態素解析.html#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Original, <span class="sc">-</span>n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb79-6"><a href="形態素解析.html#cb79-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb79-7"><a href="形態素解析.html#cb79-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Surface form&quot;</span>) <span class="sc">+</span></span>
+<span id="cb79-8"><a href="形態素解析.html#cb79-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="nlp100-knocks-r_files/figure-html/morph-36-1.png" width="672" /></p>
 </div>
 <div id="猫と共起頻度の高い上位10語" class="section level3" number="3.2.8">
 <h3><span class="header-section-number">3.2.8</span> 37. 「猫」と共起頻度の高い上位10語</h3>
 <p>解釈のしかたが複数あるけれど、ここではbi-gramを数えてお茶をにごします。</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="形態素解析.html#cb80-1"></a>neko_txt_mecab <span class="op">%&gt;%</span></span>
-<span id="cb80-2"><a href="形態素解析.html#cb80-2"></a><span class="st">  </span>tibble<span class="op">::</span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span></span>
-<span id="cb80-3"><a href="形態素解析.html#cb80-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Surface <span class="op">==</span><span class="st"> &quot;猫&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb80-4"><a href="形態素解析.html#cb80-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">Collocation =</span> stringr<span class="op">::</span><span class="kw">str_c</span>(Surface, neko_txt_mecab<span class="op">$</span>Surface[rowid <span class="op">+</span><span class="st"> </span><span class="dv">1</span>], <span class="dt">sep =</span> <span class="st">&quot; - &quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb80-5"><a href="形態素解析.html#cb80-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Sid, Collocation) <span class="op">%&gt;%</span></span>
-<span id="cb80-6"><a href="形態素解析.html#cb80-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>(Collocation, <span class="dt">sort =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb80-7"><a href="形態素解析.html#cb80-7"></a><span class="st">  </span><span class="kw">head</span>(10L) <span class="op">%&gt;%</span></span>
-<span id="cb80-8"><a href="形態素解析.html#cb80-8"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(Collocation, <span class="op">-</span>n), <span class="dt">y =</span> n)) <span class="op">+</span></span>
-<span id="cb80-9"><a href="形態素解析.html#cb80-9"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_col</span>() <span class="op">+</span></span>
-<span id="cb80-10"><a href="形態素解析.html#cb80-10"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Collocation&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Freq&quot;</span>) <span class="op">+</span></span>
-<span id="cb80-11"><a href="形態素解析.html#cb80-11"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="形態素解析.html#cb80-1" aria-hidden="true" tabindex="-1"></a>neko_txt_mecab <span class="sc">%&gt;%</span></span>
+<span id="cb80-2"><a href="形態素解析.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rowid_to_column</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb80-3"><a href="形態素解析.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Surface <span class="sc">==</span> <span class="st">&quot;猫&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb80-4"><a href="形態素解析.html#cb80-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Collocation =</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(Surface, neko_txt_mecab<span class="sc">$</span>Surface[rowid <span class="sc">+</span> <span class="dv">1</span>], <span class="at">sep =</span> <span class="st">&quot; - &quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb80-5"><a href="形態素解析.html#cb80-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Sid, Collocation) <span class="sc">%&gt;%</span></span>
+<span id="cb80-6"><a href="形態素解析.html#cb80-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(Collocation, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb80-7"><a href="形態素解析.html#cb80-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(10L) <span class="sc">%&gt;%</span></span>
+<span id="cb80-8"><a href="形態素解析.html#cb80-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Collocation, <span class="sc">-</span>n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb80-9"><a href="形態素解析.html#cb80-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb80-10"><a href="形態素解析.html#cb80-10" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Collocation&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Freq&quot;</span>) <span class="sc">+</span></span>
+<span id="cb80-11"><a href="形態素解析.html#cb80-11" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="nlp100-knocks-r_files/figure-html/morph-37-1.png" width="672" /></p>
 </div>
 <div id="ヒストグラム" class="section level3" number="3.2.9">
 <h3><span class="header-section-number">3.2.9</span> 38. ヒストグラム</h3>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="形態素解析.html#cb81-1"></a>neko_txt_mecab <span class="op">%&gt;%</span></span>
-<span id="cb81-2"><a href="形態素解析.html#cb81-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Original) <span class="op">%&gt;%</span></span>
-<span id="cb81-3"><a href="形態素解析.html#cb81-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>(Original) <span class="op">%&gt;%</span></span>
-<span id="cb81-4"><a href="形態素解析.html#cb81-4"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(Original, <span class="op">-</span>n), <span class="dt">y =</span> n)) <span class="op">+</span></span>
-<span id="cb81-5"><a href="形態素解析.html#cb81-5"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_col</span>() <span class="op">+</span></span>
-<span id="cb81-6"><a href="形態素解析.html#cb81-6"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Freq&quot;</span>) <span class="op">+</span></span>
-<span id="cb81-7"><a href="形態素解析.html#cb81-7"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">scale_y_log10</span>() <span class="op">+</span></span>
-<span id="cb81-8"><a href="形態素解析.html#cb81-8"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="形態素解析.html#cb81-1" aria-hidden="true" tabindex="-1"></a>neko_txt_mecab <span class="sc">%&gt;%</span></span>
+<span id="cb81-2"><a href="形態素解析.html#cb81-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Original) <span class="sc">%&gt;%</span></span>
+<span id="cb81-3"><a href="形態素解析.html#cb81-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(Original) <span class="sc">%&gt;%</span></span>
+<span id="cb81-4"><a href="形態素解析.html#cb81-4" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Original, <span class="sc">-</span>n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb81-5"><a href="形態素解析.html#cb81-5" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb81-6"><a href="形態素解析.html#cb81-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Freq&quot;</span>) <span class="sc">+</span></span>
+<span id="cb81-7"><a href="形態素解析.html#cb81-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb81-8"><a href="形態素解析.html#cb81-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="nlp100-knocks-r_files/figure-html/morph-38-1.png" width="672" /></p>
 </div>
 <div id="zipfの法則" class="section level3" number="3.2.10">
 <h3><span class="header-section-number">3.2.10</span> 39. Zipfの法則</h3>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="形態素解析.html#cb82-1"></a>count &lt;-<span class="st"> </span>neko_txt_mecab <span class="op">%&gt;%</span></span>
-<span id="cb82-2"><a href="形態素解析.html#cb82-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Original) <span class="op">%&gt;%</span></span>
-<span id="cb82-3"><a href="形態素解析.html#cb82-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>(Original) <span class="op">%&gt;%</span></span>
-<span id="cb82-4"><a href="形態素解析.html#cb82-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>()</span>
-<span id="cb82-5"><a href="形態素解析.html#cb82-5"></a>count <span class="op">%&gt;%</span></span>
-<span id="cb82-6"><a href="形態素解析.html#cb82-6"></a><span class="st">  </span>tibble<span class="op">::</span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span></span>
-<span id="cb82-7"><a href="形態素解析.html#cb82-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">rank =</span> <span class="kw">nrow</span>(count) <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">min_rank</span>(count<span class="op">$</span>n)[rowid]) <span class="op">%&gt;%</span></span>
-<span id="cb82-8"><a href="形態素解析.html#cb82-8"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> rank, <span class="dt">y =</span> n)) <span class="op">+</span></span>
-<span id="cb82-9"><a href="形態素解析.html#cb82-9"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb82-10"><a href="形態素解析.html#cb82-10"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Rank of Freq&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Freq&quot;</span>) <span class="op">+</span></span>
-<span id="cb82-11"><a href="形態素解析.html#cb82-11"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">scale_x_log10</span>() <span class="op">+</span></span>
-<span id="cb82-12"><a href="形態素解析.html#cb82-12"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">scale_y_log10</span>() <span class="op">+</span></span>
-<span id="cb82-13"><a href="形態素解析.html#cb82-13"></a><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="形態素解析.html#cb82-1" aria-hidden="true" tabindex="-1"></a>count <span class="ot">&lt;-</span> neko_txt_mecab <span class="sc">%&gt;%</span></span>
+<span id="cb82-2"><a href="形態素解析.html#cb82-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Original) <span class="sc">%&gt;%</span></span>
+<span id="cb82-3"><a href="形態素解析.html#cb82-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(Original) <span class="sc">%&gt;%</span></span>
+<span id="cb82-4"><a href="形態素解析.html#cb82-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
+<span id="cb82-5"><a href="形態素解析.html#cb82-5" aria-hidden="true" tabindex="-1"></a>count <span class="sc">%&gt;%</span></span>
+<span id="cb82-6"><a href="形態素解析.html#cb82-6" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rowid_to_column</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb82-7"><a href="形態素解析.html#cb82-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">nrow</span>(count) <span class="sc">+</span> <span class="dv">1</span> <span class="sc">-</span> dplyr<span class="sc">::</span><span class="fu">min_rank</span>(count<span class="sc">$</span>n)[rowid]) <span class="sc">%&gt;%</span></span>
+<span id="cb82-8"><a href="形態素解析.html#cb82-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> rank, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb82-9"><a href="形態素解析.html#cb82-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb82-10"><a href="形態素解析.html#cb82-10" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Rank of Freq&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Freq&quot;</span>) <span class="sc">+</span></span>
+<span id="cb82-11"><a href="形態素解析.html#cb82-11" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb82-12"><a href="形態素解析.html#cb82-12" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb82-13"><a href="形態素解析.html#cb82-13" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="nlp100-knocks-r_files/figure-html/morph-39-1.png" width="672" /></p>
 
 </div>

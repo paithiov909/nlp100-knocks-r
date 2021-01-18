@@ -5,26 +5,26 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Rで言語処理100本ノックを解くわけがない</title>
-  <meta name="description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta name="description" content="Rで言語処理100本ノック 2020に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Rで言語処理100本ノックを解くわけがない" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://paithiov909.github.io/nlp100-knocks-r" />
-  <meta property="og:image" content="https://paithiov909.github.io/nlp100-knocks-rimages/coverimage.jpg" />
-  <meta property="og:description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta property="og:image" content="https://paithiov909.github.io/nlp100-knocks-r/images/coverimage.jpg" />
+  <meta property="og:description" content="Rで言語処理100本ノック 2020に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
   <meta name="github-repo" content="paithiov909/nlp100-knocks-r" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Rで言語処理100本ノックを解くわけがない" />
   
-  <meta name="twitter:description" content="Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
-  <meta name="twitter:image" content="https://paithiov909.github.io/nlp100-knocks-rimages/coverimage.jpg" />
+  <meta name="twitter:description" content="Rで言語処理100本ノック 2020に取り組んでいます。Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません" />
+  <meta name="twitter:image" content="https://paithiov909.github.io/nlp100-knocks-r/images/coverimage.jpg" />
 
 <meta name="author" content="Kato Akiru" />
 
 
-<meta name="date" content="2021-01-16" />
+<meta name="date" content="2021-01-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -235,13 +234,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Rで言語処理100本ノックを解くわけがない</h1>
 <p class="author"><em>Kato Akiru</em></p>
-<p class="date"><em>2021-01-16</em></p>
+<p class="date"><em>2021-01-18</em></p>
 </div>
 <div id="はじめに" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> はじめに</h1>
 <div id="本書について" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> 本書について</h2>
-<p>Rで言語処理100本ノック 2020 (Rev 1) に取り組んでいます。</p>
+<p>Rで<a href="https://nlp100.github.io/ja/">言語処理100本ノック 2020</a>に取り組んでいます。</p>
 <p>Rでやっているコードの例を示すにとどまるもので、丁寧な解説を添えているようなものではありません。中盤以降もできそうなのでやろうとは思っていますが、実際にやる見通しは立てていません。</p>
 </div>
 <div id="全体の見通し" class="section level2" number="1.2">
@@ -274,28 +273,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="rパッケージ" class="section level3" number="1.3.2">
 <h3><span class="header-section-number">1.3.2</span> Rパッケージ</h3>
 <p>使用するおもなパッケージです。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="kw">stopifnot</span>(</span>
-<span id="cb1-2"><a href="index.html#cb1-2"></a>  <span class="kw">require</span>(tidymodels),</span>
-<span id="cb1-3"><a href="index.html#cb1-3"></a>  <span class="kw">require</span>(RcppKagome),</span>
-<span id="cb1-4"><a href="index.html#cb1-4"></a>  <span class="kw">require</span>(pipian),</span>
-<span id="cb1-5"><a href="index.html#cb1-5"></a>  <span class="kw">require</span>(textrecipes),</span>
-<span id="cb1-6"><a href="index.html#cb1-6"></a>  <span class="co">## 以下はこのセクションでのみ使うもの ##</span></span>
-<span id="cb1-7"><a href="index.html#cb1-7"></a>  <span class="kw">require</span>(RMeCab),</span>
-<span id="cb1-8"><a href="index.html#cb1-8"></a>  <span class="kw">require</span>(rjavacmecab),</span>
-<span id="cb1-9"><a href="index.html#cb1-9"></a>  <span class="kw">require</span>(tangela),</span>
-<span id="cb1-10"><a href="index.html#cb1-10"></a>  <span class="kw">require</span>(sudachir)</span>
-<span id="cb1-11"><a href="index.html#cb1-11"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(</span>
+<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(tidymodels),</span>
+<span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(RcppKagome),</span>
+<span id="cb1-4"><a href="index.html#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(pipian),</span>
+<span id="cb1-5"><a href="index.html#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(textrecipes),</span>
+<span id="cb1-6"><a href="index.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="do">## 以下はこのセクションでのみ使うもの ##</span></span>
+<span id="cb1-7"><a href="index.html#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(RMeCab),</span>
+<span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(rjavacmecab),</span>
+<span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(tangela),</span>
+<span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(sudachir)</span>
+<span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>#&gt; Loading required package: tidymodels</code></pre>
-<pre><code>#&gt; -- Attaching packages ------------------------------------------ tidymodels 0.1.2 --</code></pre>
+<pre><code>#&gt; -- Attaching packages ----------------------------------------- tidymodels 0.1.2 --</code></pre>
 <pre><code>#&gt; √ broom     0.7.3      √ recipes   0.1.15
 #&gt; √ dials     0.0.9      √ rsample   0.0.8 
-#&gt; √ dplyr     1.0.2      √ tibble    3.0.4 
+#&gt; √ dplyr     1.0.3      √ tibble    3.0.5 
 #&gt; √ ggplot2   3.3.3      √ tidyr     1.1.2 
 #&gt; √ infer     0.5.4      √ tune      0.1.2 
 #&gt; √ modeldata 0.1.0      √ workflows 0.2.1 
 #&gt; √ parsnip   0.1.4      √ yardstick 0.0.7 
 #&gt; √ purrr     0.3.4</code></pre>
-<pre><code>#&gt; -- Conflicts --------------------------------------------- tidymodels_conflicts() --
+<pre><code>#&gt; -- Conflicts -------------------------------------------- tidymodels_conflicts() --
 #&gt; x purrr::discard() masks scales::discard()
 #&gt; x dplyr::filter()  masks stats::filter()
 #&gt; x dplyr::lag()     masks stats::lag()
@@ -328,26 +327,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>rjavacmecab::cmecab</li>
 <li>RcppKagome::kagome</li>
 <li>tangela::kuromoji</li>
-<li>sudachir::form(mode = “A”, type = “surface”)</li>
+<li>sudachir::form(mode = “A,” type = “surface”)</li>
 </ul>
 <p>以下は解析する文書のサンプル。</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="index.html#cb17-1"></a>csv &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;miyazawa_kenji_head.csv&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb17-2"><a href="index.html#cb17-2"></a><span class="st">  </span>readr<span class="op">::</span><span class="kw">read_csv</span>() <span class="op">%&gt;%</span></span>
-<span id="cb17-3"><a href="index.html#cb17-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">sample_n</span>(50L) <span class="op">%&gt;%</span></span>
-<span id="cb17-4"><a href="index.html#cb17-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(</span>
-<span id="cb17-5"><a href="index.html#cb17-5"></a>    <span class="dt">sentences_shift_jis =</span> <span class="kw">iconv</span>(sentences, <span class="dt">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;CP932&quot;</span>)</span>
-<span id="cb17-6"><a href="index.html#cb17-6"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="index.html#cb17-1" aria-hidden="true" tabindex="-1"></a>csv <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;miyazawa_kenji_head.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="index.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="index.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">sample_n</span>(50L) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="index.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb17-5"><a href="index.html#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sentences_shift_jis =</span> <span class="fu">iconv</span>(sentences, <span class="at">from =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="at">to =</span> <span class="st">&quot;CP932&quot;</span>)</span>
+<span id="cb17-6"><a href="index.html#cb17-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>#&gt; 
-#&gt; -- Column specification ------------------------------------------------------------
+#&gt; -- Column specification -----------------------------------------------------------
 #&gt; cols(
 #&gt;   rowid = col_double(),
 #&gt;   sentences = col_character()
 #&gt; )</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="index.html#cb19-1"></a><span class="kw">str</span>(csv)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="index.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(csv)</span></code></pre></div>
 <pre><code>#&gt; tibble [50 x 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-#&gt;  $ rowid              : num [1:50] 632 537 204 444 712 609 861 834 461 97 ...
-#&gt;  $ sentences          : chr [1:50] &quot;すると森の奥の方で何かパチパチ音がしました。&quot; &quot;「うん。その次に千つぶって云ったねい。千つぶでもよかったねい。」&quot; &quot;日が強く照るときは岩は乾いてまっ白に見え、たて横に走ったひび割れもあり、大きな帽子を冠ってその上をうつむいて歩&quot;| __truncated__ &quot;こんなようにして出来たきれいなお庭を、私どもはたびたび、あちこちで見ます。それは畑の豆の木の下や、林の楢の木の&quot;| __truncated__ ...
-#&gt;  $ sentences_shift_jis: chr [1:50] &quot;すると森の奥の方で何かパチパチ音がしました。&quot; &quot;「うん。その次に千つぶって云ったねい。千つぶでもよかったねい。」&quot; &quot;日が強く照るときは岩は乾いてまっ白に見え、たて横に走ったひび割れもあり、大きな帽子を冠ってその上をうつむいて歩&quot;| __truncated__ &quot;こんなようにして出来たきれいなお庭を、私どもはたびたび、あちこちで見ます。それは畑の豆の木の下や、林の楢の木の&quot;| __truncated__ ...
+#&gt;  $ rowid              : num [1:50] 331 57 174 599 474 243 121 9 535 505 ...
+#&gt;  $ sentences          : chr [1:50] &quot;(※......&quot; &quot;そして今日から授業だ。測量はたしかに面白い。地図を見るのも面白い。ぜんたいここらの田や畑でほんとうの反別になっ&quot;| __truncated__ &quot;「これおっかさんの髪でこさえた網じゃないの。」&quot; &quot;「しかし地味はどうかな。」と言いながら、屈んで一本のすすきを引き抜いて、その根から土を掌にふるい落して、しばら&quot;| __truncated__ ...
+#&gt;  $ sentences_shift_jis: chr [1:50] &quot;(※......&quot; &quot;そして今日から授業だ。測量はたしかに面白い。地図を見るのも面白い。ぜんたいここらの田や畑でほんとうの反別になっ&quot;| __truncated__ &quot;「これおっかさんの髪でこさえた網じゃないの。」&quot; &quot;「しかし地味はどうかな。」と言いながら、屈んで一本のすすきを引き抜いて、その根から土を掌にふるい落して、しばら&quot;| __truncated__ ...
 #&gt;  - attr(*, &quot;spec&quot;)=
 #&gt;   .. cols(
 #&gt;   ..   rowid = col_double(),
@@ -356,72 +355,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tokenize-character-scalar" class="section level4" number="1.4.0.1">
 <h4><span class="header-section-number">1.4.0.1</span> Tokenize Character Scalar</h4>
 <p>ひとつの文について繰り返し解析する場合。</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="index.html#cb21-1"></a>tm &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</span>
-<span id="cb21-2"><a href="index.html#cb21-2"></a>  <span class="dt">RMeCabC =</span> <span class="kw">RMeCabC</span>(csv<span class="op">$</span>sentences_shift_jis[<span class="dv">1</span>]),</span>
-<span id="cb21-3"><a href="index.html#cb21-3"></a>  <span class="dt">cmecab =</span> <span class="kw">cmecab</span>(csv<span class="op">$</span>sentences[<span class="dv">1</span>]),</span>
-<span id="cb21-4"><a href="index.html#cb21-4"></a>  <span class="dt">kagome =</span> <span class="kw">kagome</span>(csv<span class="op">$</span>sentences[<span class="dv">1</span>]),</span>
-<span id="cb21-5"><a href="index.html#cb21-5"></a>  <span class="dt">kuromoji =</span> <span class="kw">kuromoji</span>(csv<span class="op">$</span>sentences[<span class="dv">1</span>]),</span>
-<span id="cb21-6"><a href="index.html#cb21-6"></a>  <span class="dt">sudachipy =</span> sudachir<span class="op">::</span><span class="kw">form</span>(csv<span class="op">$</span>sentences[<span class="dv">1</span>], <span class="dt">mode =</span> <span class="st">&quot;A&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;surface&quot;</span>),</span>
-<span id="cb21-7"><a href="index.html#cb21-7"></a>  <span class="dt">times =</span> 50L</span>
-<span id="cb21-8"><a href="index.html#cb21-8"></a>)</span></code></pre></div>
-<pre><code>#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 17 tokens</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="index.html#cb23-1"></a><span class="kw">summary</span>(tm)</span></code></pre></div>
-<pre><code>#&gt;        expr      min       lq       mean    median       uq       max neval
-#&gt; 1   RMeCabC   2.6697   2.9443   4.732862   3.07815   3.3998   82.2132    50
-#&gt; 2    cmecab   9.7422  10.3093  27.797602  10.89655  13.6096  765.2277    50
-#&gt; 3    kagome   1.4597   1.7534  51.514736   1.81970   2.1135 2459.8447    50
-#&gt; 4  kuromoji 106.9825 110.8610 132.043908 123.78735 140.7594  267.8276    50
-#&gt; 5 sudachipy 156.4249 161.9705 193.445184 174.38975 203.2930  594.2226    50</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="index.html#cb25-1"></a>ggplot2<span class="op">::</span><span class="kw">autoplot</span>(tm)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="index.html#cb21-1" aria-hidden="true" tabindex="-1"></a>tm <span class="ot">&lt;-</span> microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
+<span id="cb21-2"><a href="index.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">RMeCabC =</span> <span class="fu">RMeCabC</span>(csv<span class="sc">$</span>sentences_shift_jis[<span class="dv">1</span>]),</span>
+<span id="cb21-3"><a href="index.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cmecab =</span> <span class="fu">cmecab</span>(csv<span class="sc">$</span>sentences[<span class="dv">1</span>]),</span>
+<span id="cb21-4"><a href="index.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">kagome =</span> <span class="fu">kagome</span>(csv<span class="sc">$</span>sentences[<span class="dv">1</span>]),</span>
+<span id="cb21-5"><a href="index.html#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">kuromoji =</span> <span class="fu">kuromoji</span>(csv<span class="sc">$</span>sentences[<span class="dv">1</span>]),</span>
+<span id="cb21-6"><a href="index.html#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">sudachipy =</span> sudachir<span class="sc">::</span><span class="fu">form</span>(csv<span class="sc">$</span>sentences[<span class="dv">1</span>], <span class="at">mode =</span> <span class="st">&quot;A&quot;</span>, <span class="at">type =</span> <span class="st">&quot;surface&quot;</span>),</span>
+<span id="cb21-7"><a href="index.html#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">times =</span> 50L</span>
+<span id="cb21-8"><a href="index.html#cb21-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens
+#&gt; Parsed to 8 tokens</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="index.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tm)</span></code></pre></div>
+<pre><code>#&gt;        expr     min      lq       mean    median       uq       max neval
+#&gt; 1   RMeCabC  1183.1  1426.2   4371.328   1458.50   1725.2  141714.1    50
+#&gt; 2    cmecab 10261.9 10955.7  17718.106  11931.80  14607.5  250561.6    50
+#&gt; 3    kagome   265.0   427.4  53085.630    548.30    588.9 2628894.8    50
+#&gt; 4  kuromoji  7654.0  8710.3  19691.788   9967.25  11812.4  460552.8    50
+#&gt; 5 sudachipy 90643.6 99149.6 125561.200 108503.20 123357.8  677157.2    50</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="index.html#cb25-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">autoplot</span>(tm)</span></code></pre></div>
 <pre><code>#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
 <p><img src="nlp100-knocks-r_files/figure-html/bench-plot_1-1.png" width="672" /></p>
 </div>
@@ -429,272 +428,278 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.4.1</span> Tokenize Character Vector</h3>
 <p>50文を長さ<code>50</code>のベクトルとして与える場合。</p>
 <p>RMeCab::RMeCabCとtangela::kuromojiは長さが1のベクトル（character scalar）しか受けつけないため、ここではsapplyでラップしています。なお、rjavacmecab::cmecabについては、ベクトルを与えられた場合は要素を改行でcollapseしてひとつの文にして解析するため、他とは挙動が異なります。</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="index.html#cb27-1"></a>tm &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</span>
-<span id="cb27-2"><a href="index.html#cb27-2"></a>  <span class="dt">RMeCabC =</span> <span class="kw">sapply</span>(csv<span class="op">$</span>sentences_shift_jis, RMeCabC),</span>
-<span id="cb27-3"><a href="index.html#cb27-3"></a>  <span class="dt">cmecab =</span> <span class="kw">cmecab</span>(csv<span class="op">$</span>sentences),</span>
-<span id="cb27-4"><a href="index.html#cb27-4"></a>  <span class="dt">kagome =</span> <span class="kw">kagome</span>(csv<span class="op">$</span>sentences),</span>
-<span id="cb27-5"><a href="index.html#cb27-5"></a>  <span class="dt">kuromoji =</span> <span class="kw">sapply</span>(csv<span class="op">$</span>sentences, kuromoji),</span>
-<span id="cb27-6"><a href="index.html#cb27-6"></a>  <span class="dt">sudachipy =</span> sudachir<span class="op">::</span><span class="kw">form</span>(csv<span class="op">$</span>sentences, <span class="dt">mode =</span> <span class="st">&quot;A&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;surface&quot;</span>),</span>
-<span id="cb27-7"><a href="index.html#cb27-7"></a>  <span class="dt">times =</span> 5L</span>
-<span id="cb27-8"><a href="index.html#cb27-8"></a>)</span></code></pre></div>
-<pre><code>#&gt; Parsed to 17 tokens
-#&gt; Parsed to 23 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 37 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 93 tokens
-#&gt; Parsed to 19 tokens
-#&gt; Parsed to 4 tokens
-#&gt; Parsed to 1 token
-#&gt; Parsed to 1 token
-#&gt; Parsed to 10 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 3 tokens
-#&gt; Parsed to 5 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 51 tokens
-#&gt; Parsed to 104 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 9 tokens
-#&gt; Parsed to 19 tokens
-#&gt; Parsed to 155 tokens
-#&gt; Parsed to 156 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 20 tokens
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="index.html#cb27-1" aria-hidden="true" tabindex="-1"></a>tm <span class="ot">&lt;-</span> microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
+<span id="cb27-2"><a href="index.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">RMeCabC =</span> <span class="fu">sapply</span>(csv<span class="sc">$</span>sentences_shift_jis, RMeCabC),</span>
+<span id="cb27-3"><a href="index.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cmecab =</span> <span class="fu">cmecab</span>(csv<span class="sc">$</span>sentences),</span>
+<span id="cb27-4"><a href="index.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">kagome =</span> <span class="fu">kagome</span>(csv<span class="sc">$</span>sentences),</span>
+<span id="cb27-5"><a href="index.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">kuromoji =</span> <span class="fu">sapply</span>(csv<span class="sc">$</span>sentences, kuromoji),</span>
+<span id="cb27-6"><a href="index.html#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">sudachipy =</span> sudachir<span class="sc">::</span><span class="fu">form</span>(csv<span class="sc">$</span>sentences, <span class="at">mode =</span> <span class="st">&quot;A&quot;</span>, <span class="at">type =</span> <span class="st">&quot;surface&quot;</span>),</span>
+<span id="cb27-7"><a href="index.html#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">times =</span> 5L</span>
+<span id="cb27-8"><a href="index.html#cb27-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>#&gt; Parsed to 8 tokens
+#&gt; Parsed to 125 tokens
+#&gt; Parsed to 16 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 170 tokens
+#&gt; Parsed to 87 tokens
+#&gt; Parsed to 46 tokens
 #&gt; Parsed to 21 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 45 tokens
-#&gt; Parsed to 24 tokens
+#&gt; Parsed to 9 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 69 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 4 tokens
+#&gt; Parsed to 60 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 33 tokens
+#&gt; Parsed to 111 tokens
+#&gt; Parsed to 14 tokens
 #&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
-#&gt; Parsed to 12 tokens
-#&gt; Parsed to 43 tokens
-#&gt; Parsed to 63 tokens
-#&gt; Parsed to 60 tokens
-#&gt; Parsed to 46 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 25 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 110 tokens
-#&gt; Parsed to 50 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 23 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 23 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 37 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 93 tokens
-#&gt; Parsed to 19 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 99 tokens
+#&gt; Parsed to 22 tokens
+#&gt; Parsed to 35 tokens
+#&gt; Parsed to 22 tokens
 #&gt; Parsed to 4 tokens
-#&gt; Parsed to 1 token
-#&gt; Parsed to 1 token
-#&gt; Parsed to 10 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 3 tokens
-#&gt; Parsed to 5 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 51 tokens
-#&gt; Parsed to 104 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 9 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 18 tokens
 #&gt; Parsed to 19 tokens
-#&gt; Parsed to 155 tokens
-#&gt; Parsed to 156 tokens
-#&gt; Parsed to 38 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 54 tokens
+#&gt; Parsed to 31 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 15 tokens
+#&gt; Parsed to 3 tokens
+#&gt; Parsed to 50 tokens
+#&gt; Parsed to 425 tokens
+#&gt; Parsed to 108 tokens
+#&gt; Parsed to 83 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 57 tokens
+#&gt; Parsed to 41 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 79 tokens
 #&gt; Parsed to 8 tokens
-#&gt; Parsed to 20 tokens
+#&gt; Parsed to 125 tokens
+#&gt; Parsed to 16 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 170 tokens
+#&gt; Parsed to 87 tokens
+#&gt; Parsed to 46 tokens
 #&gt; Parsed to 21 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 45 tokens
-#&gt; Parsed to 24 tokens
+#&gt; Parsed to 9 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 69 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 4 tokens
+#&gt; Parsed to 60 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 33 tokens
+#&gt; Parsed to 111 tokens
+#&gt; Parsed to 14 tokens
 #&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
-#&gt; Parsed to 12 tokens
-#&gt; Parsed to 43 tokens
-#&gt; Parsed to 63 tokens
-#&gt; Parsed to 60 tokens
-#&gt; Parsed to 46 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 25 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 110 tokens
-#&gt; Parsed to 50 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 23 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 23 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 37 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 93 tokens
-#&gt; Parsed to 19 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 99 tokens
+#&gt; Parsed to 22 tokens
+#&gt; Parsed to 35 tokens
+#&gt; Parsed to 22 tokens
 #&gt; Parsed to 4 tokens
-#&gt; Parsed to 1 token
-#&gt; Parsed to 1 token
-#&gt; Parsed to 10 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 3 tokens
-#&gt; Parsed to 5 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 51 tokens
-#&gt; Parsed to 104 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 9 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 18 tokens
 #&gt; Parsed to 19 tokens
-#&gt; Parsed to 155 tokens
-#&gt; Parsed to 156 tokens
-#&gt; Parsed to 38 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 54 tokens
+#&gt; Parsed to 31 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 15 tokens
+#&gt; Parsed to 3 tokens
+#&gt; Parsed to 50 tokens
+#&gt; Parsed to 425 tokens
+#&gt; Parsed to 108 tokens
+#&gt; Parsed to 83 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 57 tokens
+#&gt; Parsed to 41 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 79 tokens
 #&gt; Parsed to 8 tokens
-#&gt; Parsed to 20 tokens
+#&gt; Parsed to 125 tokens
+#&gt; Parsed to 16 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 170 tokens
+#&gt; Parsed to 87 tokens
+#&gt; Parsed to 46 tokens
 #&gt; Parsed to 21 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 45 tokens
-#&gt; Parsed to 24 tokens
+#&gt; Parsed to 9 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 69 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 4 tokens
+#&gt; Parsed to 60 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 33 tokens
+#&gt; Parsed to 111 tokens
+#&gt; Parsed to 14 tokens
 #&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
-#&gt; Parsed to 12 tokens
-#&gt; Parsed to 43 tokens
-#&gt; Parsed to 63 tokens
-#&gt; Parsed to 60 tokens
-#&gt; Parsed to 46 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 25 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 110 tokens
-#&gt; Parsed to 50 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 23 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 23 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 37 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 93 tokens
-#&gt; Parsed to 19 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 99 tokens
+#&gt; Parsed to 22 tokens
+#&gt; Parsed to 35 tokens
+#&gt; Parsed to 22 tokens
 #&gt; Parsed to 4 tokens
-#&gt; Parsed to 1 token
-#&gt; Parsed to 1 token
-#&gt; Parsed to 10 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 3 tokens
-#&gt; Parsed to 5 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 51 tokens
-#&gt; Parsed to 104 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 9 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 18 tokens
 #&gt; Parsed to 19 tokens
-#&gt; Parsed to 155 tokens
-#&gt; Parsed to 156 tokens
-#&gt; Parsed to 38 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 54 tokens
+#&gt; Parsed to 31 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 15 tokens
+#&gt; Parsed to 3 tokens
+#&gt; Parsed to 50 tokens
+#&gt; Parsed to 425 tokens
+#&gt; Parsed to 108 tokens
+#&gt; Parsed to 83 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 57 tokens
+#&gt; Parsed to 41 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 79 tokens
 #&gt; Parsed to 8 tokens
-#&gt; Parsed to 20 tokens
+#&gt; Parsed to 125 tokens
+#&gt; Parsed to 16 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 170 tokens
+#&gt; Parsed to 87 tokens
+#&gt; Parsed to 46 tokens
 #&gt; Parsed to 21 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 45 tokens
-#&gt; Parsed to 24 tokens
+#&gt; Parsed to 9 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 69 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 4 tokens
+#&gt; Parsed to 60 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 33 tokens
+#&gt; Parsed to 111 tokens
+#&gt; Parsed to 14 tokens
 #&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
-#&gt; Parsed to 12 tokens
-#&gt; Parsed to 43 tokens
-#&gt; Parsed to 63 tokens
-#&gt; Parsed to 60 tokens
-#&gt; Parsed to 46 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 25 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 110 tokens
-#&gt; Parsed to 50 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 23 tokens
-#&gt; Parsed to 17 tokens
-#&gt; Parsed to 23 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 65 tokens
-#&gt; Parsed to 37 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 93 tokens
-#&gt; Parsed to 19 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 99 tokens
+#&gt; Parsed to 22 tokens
+#&gt; Parsed to 35 tokens
+#&gt; Parsed to 22 tokens
 #&gt; Parsed to 4 tokens
-#&gt; Parsed to 1 token
-#&gt; Parsed to 1 token
-#&gt; Parsed to 10 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 3 tokens
-#&gt; Parsed to 5 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 51 tokens
-#&gt; Parsed to 104 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 9 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 18 tokens
 #&gt; Parsed to 19 tokens
-#&gt; Parsed to 155 tokens
-#&gt; Parsed to 156 tokens
-#&gt; Parsed to 38 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 54 tokens
+#&gt; Parsed to 31 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 15 tokens
+#&gt; Parsed to 3 tokens
+#&gt; Parsed to 50 tokens
+#&gt; Parsed to 425 tokens
+#&gt; Parsed to 108 tokens
+#&gt; Parsed to 83 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 57 tokens
+#&gt; Parsed to 41 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 79 tokens
 #&gt; Parsed to 8 tokens
-#&gt; Parsed to 20 tokens
+#&gt; Parsed to 125 tokens
+#&gt; Parsed to 16 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 170 tokens
+#&gt; Parsed to 87 tokens
+#&gt; Parsed to 46 tokens
 #&gt; Parsed to 21 tokens
-#&gt; Parsed to 42 tokens
-#&gt; Parsed to 45 tokens
-#&gt; Parsed to 24 tokens
+#&gt; Parsed to 9 tokens
+#&gt; Parsed to 38 tokens
+#&gt; Parsed to 12 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 156 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 69 tokens
+#&gt; Parsed to 21 tokens
+#&gt; Parsed to 4 tokens
+#&gt; Parsed to 60 tokens
+#&gt; Parsed to 53 tokens
+#&gt; Parsed to 33 tokens
+#&gt; Parsed to 111 tokens
+#&gt; Parsed to 14 tokens
 #&gt; Parsed to 10 tokens
 #&gt; Parsed to 28 tokens
-#&gt; Parsed to 12 tokens
-#&gt; Parsed to 43 tokens
-#&gt; Parsed to 63 tokens
-#&gt; Parsed to 60 tokens
-#&gt; Parsed to 46 tokens
-#&gt; Parsed to 38 tokens
-#&gt; Parsed to 25 tokens
-#&gt; Parsed to 16 tokens
-#&gt; Parsed to 14 tokens
-#&gt; Parsed to 27 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 110 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 99 tokens
+#&gt; Parsed to 22 tokens
+#&gt; Parsed to 35 tokens
+#&gt; Parsed to 22 tokens
+#&gt; Parsed to 4 tokens
+#&gt; Parsed to 13 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 19 tokens
+#&gt; Parsed to 11 tokens
+#&gt; Parsed to 54 tokens
+#&gt; Parsed to 31 tokens
+#&gt; Parsed to 104 tokens
+#&gt; Parsed to 15 tokens
+#&gt; Parsed to 3 tokens
 #&gt; Parsed to 50 tokens
-#&gt; Parsed to 8 tokens
-#&gt; Parsed to 36 tokens
-#&gt; Parsed to 7 tokens
-#&gt; Parsed to 23 tokens</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="index.html#cb29-1"></a><span class="kw">summary</span>(tm)</span></code></pre></div>
-<pre><code>#&gt;        expr        min         lq       mean     median         uq        max neval
-#&gt; 1   RMeCabC   148.9700   152.9067   160.1827   161.1724   161.7656   176.0988     5
-#&gt; 2    cmecab    18.4187    18.6218  1009.7648    19.3165    20.2745  4972.1923     5
-#&gt; 3    kagome   132.0658   138.0055   149.3276   138.8254   151.1924   186.5489     5
-#&gt; 4  kuromoji 12179.7837 12392.1588 12667.4751 12775.0521 12851.7185 13138.6625     5
-#&gt; 5 sudachipy 15341.9385 15910.1130 20345.5447 15912.9144 16760.8361 37801.9215     5</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="index.html#cb31-1"></a>ggplot2<span class="op">::</span><span class="kw">autoplot</span>(tm)</span></code></pre></div>
+#&gt; Parsed to 425 tokens
+#&gt; Parsed to 108 tokens
+#&gt; Parsed to 83 tokens
+#&gt; Parsed to 27 tokens
+#&gt; Parsed to 57 tokens
+#&gt; Parsed to 41 tokens
+#&gt; Parsed to 18 tokens
+#&gt; Parsed to 79 tokens</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="index.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tm)</span></code></pre></div>
+<pre><code>#&gt;        expr        min         lq        mean     median         uq        max
+#&gt; 1   RMeCabC   101.5643   104.4148  4038.98794   112.5385   147.5691 19728.8530
+#&gt; 2    cmecab    20.3105    20.6075    31.40836    22.3664    25.5556    68.2018
+#&gt; 3    kagome   204.0959   217.8047   228.77362   219.8113   233.2880   268.8682
+#&gt; 4  kuromoji 17895.2586 17973.5940 18562.13798 17991.7732 18477.9475 20472.1166
+#&gt; 5 sudachipy 22276.4971 23006.4075 26480.21422 23153.5004 23627.4018 40337.2643
+#&gt;   neval
+#&gt; 1     5
+#&gt; 2     5
+#&gt; 3     5
+#&gt; 4     5
+#&gt; 5     5</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="index.html#cb31-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">autoplot</span>(tm)</span></code></pre></div>
 <pre><code>#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
 <p><img src="nlp100-knocks-r_files/figure-html/bench-plot_2-1.png" width="672" /></p>
 
