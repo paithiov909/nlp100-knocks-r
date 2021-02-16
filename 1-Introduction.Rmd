@@ -165,6 +165,7 @@ typoglycemia("I couldn't believe that I could actually understand what I was rea
 - 13. col1.txtとcol2.txtをマージ
 
 ```{r unixcmd-01}
+knitr::clean_cache(TRUE)
 temp <- tempfile(fileext = ".txt")
 download.file("https://nlp100.github.io/data/popular-names.txt", temp)
 txt <- temp %>%
@@ -229,10 +230,11 @@ purrr::map_dfr(txt$name, function(name) {
 ### 20. JSONデータの読み込み
 
 ```{r reprex-20}
+knitr::clean_cache()
 temp <- tempfile(fileext = ".gz")
 download.file("https://nlp100.github.io/data/jawiki-country.json.gz", temp)
-con <- gzfile(description = temp, open = "rb", encoding = "UTF-8")
-jsonfile <- readr::read_lines(con) %>%
+con <- gzfile(description = temp, open = "rb")
+jsonfile <- readr::read_lines(con, locale = readr::locale(encoding = "UTF-8")) %>%
   purrr::map_dfr(~
   jsonlite::fromJSON(.))
 close(con)
@@ -251,6 +253,7 @@ lines <- jsonfile %>%
   dplyr::pull(text) %>%
   readr::read_lines() %>%
   stringr::str_subset(stringr::fixed("[[Category:"))
+
 lines
 ```
 

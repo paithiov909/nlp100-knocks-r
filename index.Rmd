@@ -12,12 +12,28 @@ url: "https://paithiov909.github.io/nlp100-knocks-r"
 github-repo: "paithiov909/nlp100-knocks-r"
 cover-image: "/images/coverimage.jpg"
 favicon: "images/favicon.ico"
+header-includes:
+  - \usepackage[utf8]{inputenc}
+  - \usepackage{booktabs}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   tidy = "styler",
   comment = "#>"
+)
+```
+
+```{r load_packages, include=FALSE}
+stopifnot(
+  require(tidymodels),
+  require(RcppKagome),
+  require(pipian),
+  require(textrecipes),
+  require(RMeCab),
+  require(RcppMeCab),
+  require(rjavacmecab),
+  require(tangela)
 )
 ```
 
@@ -55,24 +71,6 @@ Rでやっているコードの例を示すにとどまるもので、丁寧な�
 - MeCab (0.996)
 - CaboCha (0.69)
 
-### Rパッケージ
-
-使用するおもなパッケージです。
-
-```{r load_packages}
-stopifnot(
-  require(tidymodels),
-  require(RcppKagome),
-  require(pipian),
-  require(textrecipes),
-  ## 以下はこのセクションでのみ使うもの ##
-  require(RMeCab),
-  require(rjavacmecab),
-  require(tangela),
-  require(sudachir)
-)
-```
-
 ## 資料
 
 参考としてRで形態素解析するパッケージの速度比較をします。
@@ -80,10 +78,13 @@ stopifnot(
 以下を試しています。
 
 - RMeCab::RMeCabC
+- RcppMeCab::pos
+- RcppMeCab::posParallel
 - rjavacmecab::cmecab
 - RcppKagome::kagome
 - tangela::kuromoji
-- sudachir::form(mode = "A", type = "surface")
+
+`RcppMeCab::pos`はMeCabのタガーインスタンスを一つだけつくってそれぞれの文をひとつずつ解析する処理を繰り返します。一方で、`RcppMeCab::posParallel`はマルチスレッドで、スレッドごとにMeCabのタガーインスタンスを生成します。形態素解析をするライブラリでは一般にタガーインスタンスの生成はコストが高い処理であるため、スレッドごとに処理する文の分量が極端に少ない場合、解析にかかる時間の割にインスタンスの生成にコストが割かれることになって、`RcppMeCab::posParallel`ではパフォーマンスが悪化することがあります。
 
 以下は解析する文書のサンプル。
 
@@ -95,20 +96,31 @@ csv <- file.path("miyazawa_kenji_head.csv") %>%
     sentences_shift_jis = iconv(sentences, from = "UTF-8", to = "CP932")
   )
 
-str(csv)
+dplyr::glimpse(csv)
+```
+
+```{r bench-prep_2, include=FALSE}
+## Initialize instances
+RMeCabC("test", mecabrc = "/MeCab/ipadic-shiftjis/mecabrc")
+pos("test")
+posParallel("test")
+cmecab("test")
+kagome("test")
+kuromoji("test")
 ```
 
 #### Tokenize Character Scalar
 
 ひとつの文について繰り返し解析する場合。
 
-```{r bench-summary_1, message=FALSE, warning=FALSE}
+```{r bench-summary_1}
 tm <- microbenchmark::microbenchmark(
-  RMeCabC = RMeCabC(csv$sentences_shift_jis[1]),
+  RMeCabC = RMeCabC(csv$sentences_shift_jis[1], mecabrc = "/MeCab/ipadic-shiftjis/mecabrc"),
+  pos = pos(csv$sentences[1]),
+  posParallel = posParallel(csv$sentences[1]),
   cmecab = cmecab(csv$sentences[1]),
   kagome = kagome(csv$sentences[1]),
   kuromoji = kuromoji(csv$sentences[1]),
-  sudachipy = sudachir::form(csv$sentences[1], mode = "A", type = "surface"),
   times = 50L
 )
 
@@ -125,13 +137,14 @@ ggplot2::autoplot(tm)
 
 RMeCab::RMeCabCとtangela::kuromojiは長さが1のベクトル（character scalar）しか受けつけないため、ここではsapplyでラップしています。なお、rjavacmecab::cmecabについては、ベクトルを与えられた場合は要素を改行でcollapseしてひとつの文にして解析するため、他とは挙動が異なります。
 
-```{r bench-summary_2, message=FALSE, warning=FALSE}
+```{r bench-summary_2}
 tm <- microbenchmark::microbenchmark(
-  RMeCabC = sapply(csv$sentences_shift_jis, RMeCabC),
+  RMeCabC = purrr::map(csv$sentences_shift_jis, ~ RMeCabC(., mecabrc = "/MeCab/ipadic-shiftjis/mecabrc")),
+  pos = pos(csv$sentences),
+  posParallel = posParallel(csv$sentences),
   cmecab = cmecab(csv$sentences),
   kagome = kagome(csv$sentences),
   kuromoji = sapply(csv$sentences, kuromoji),
-  sudachipy = sudachir::form(csv$sentences, mode = "A", type = "surface"),
   times = 5L
 )
 

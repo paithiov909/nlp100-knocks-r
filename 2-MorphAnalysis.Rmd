@@ -36,7 +36,7 @@ head(neko_txt_mecab)
 ```{r morph-31}
 neko_txt_mecab %>%
   dplyr::filter(POS1 == "動詞") %>%
-  dplyr::select(Surface) %>%
+  dplyr::select(token) %>%
   head()
 ```
 
@@ -54,13 +54,13 @@ neko_txt_mecab %>%
 ```{r morph-33}
 neko_txt_mecab %>%
   tibble::rowid_to_column() %>%
-  dplyr::filter(Surface == "の") %>%
+  dplyr::filter(token == "の") %>%
   dplyr::pull(rowid) %>%
   purrr::keep(~ neko_txt_mecab$POS1[. - 1] == "名詞" && neko_txt_mecab$POS1[. + 1] == "名詞") %>%
   purrr::map_chr(~ stringr::str_c(
-    neko_txt_mecab$Surface[. - 1],
-    neko_txt_mecab$Surface[.],
-    neko_txt_mecab$Surface[. + 1],
+    neko_txt_mecab$token[. - 1],
+    neko_txt_mecab$token[.],
+    neko_txt_mecab$token[. + 1],
     collapse = ""
   )) %>%
   head(30L)
@@ -82,9 +82,9 @@ search_in <- idx
 
 purrr::map_chr(search_in, function(idx) {
   itr <- idx
-  res <- stringr::str_c(neko_txt_mecab$Surface[idx])
+  res <- stringr::str_c(neko_txt_mecab$token[idx])
   while (neko_txt_mecab$POS1[itr + 1] == "名詞") {
-    res <- stringr::str_c(res, neko_txt_mecab$Surface[itr + 1])
+    res <- stringr::str_c(res, neko_txt_mecab$token[itr + 1])
     search_in <<- purrr::discard(search_in, ~ . == itr + 1)
     itr <- itr + 1
     next
@@ -112,7 +112,7 @@ neko_txt_mecab %>%
   head(10) %>%
   ggplot(aes(x = reorder(Original, -n), y = n)) +
   geom_col() +
-  labs(x = "Surface form") +
+  labs(x = "token form") +
   theme_light()
 ```
 
@@ -123,9 +123,9 @@ neko_txt_mecab %>%
 ```{r morph-37}
 neko_txt_mecab %>%
   tibble::rowid_to_column() %>%
-  dplyr::filter(Surface == "猫") %>%
-  dplyr::mutate(Collocation = stringr::str_c(Surface, neko_txt_mecab$Surface[rowid + 1], sep = " - ")) %>%
-  dplyr::group_by(Sid, Collocation) %>%
+  dplyr::filter(token == "猫") %>%
+  dplyr::mutate(Collocation = stringr::str_c(token, neko_txt_mecab$token[rowid + 1], sep = " - ")) %>%
+  dplyr::group_by(sentence_id, Collocation) %>%
   dplyr::count(Collocation, sort = TRUE) %>%
   head(10L) %>%
   ggplot2::ggplot(aes(x = reorder(Collocation, -n), y = n)) +
